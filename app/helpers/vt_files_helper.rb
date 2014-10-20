@@ -1,0 +1,2 @@
+module VtFilesHelper
+end

@@ -1,0 +1,33 @@
+<%= form_for(@vt_file) do |f| %>
+  <% if @vt_file.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@vt_file.errors.count, "error") %> prohibited this vt_file from being saved:</h2>
+
+      <ul>
+      <% @vt_file.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :path_file %><br>
+    <%= f.text_field :path_file %>
+  </div>
+  <div class="field">
+    <%= f.label :task_id %><br>
+    <%= f.text_field :task_id %>
+  </div>
+  <div class="field">
+    <%= f.label :type %><br>
+    <%= f.text_field :type %>
+  </div>
+  <div class="field">
+    <%= f.label :status %><br>
+    <%= f.number_field :status %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  vtn: MyString
+  cops: MyString
+  client: MyString
+  video_title: MyString
+  type_script: 1
+  number_chapters: 1
+  notes: MyString
+  rush: false
+  rate: 9.99
+  due_date: 2014-10-20 14:06:46
+  vt_file_id: 1
+  status: 1
+
+two:
+  vtn: MyString
+  cops: MyString
+  client: MyString
+  video_title: MyString
+  type_script: 1
+  number_chapters: 1
+  notes: MyString
+  rush: false
+  rate: 9.99
+  due_date: 2014-10-20 14:06:46
+  vt_file_id: 1
+  status: 1

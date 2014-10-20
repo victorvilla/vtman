@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Vtn:</strong>
+  <%= @task.vtn %>
+</p>
+
+<p>
+  <strong>Cops:</strong>
+  <%= @task.cops %>
+</p>
+
+<p>
+  <strong>Client:</strong>
+  <%= @task.client %>
+</p>
+
+<p>
+  <strong>Video title:</strong>
+  <%= @task.video_title %>
+</p>
+
+<p>
+  <strong>Type script:</strong>
+  <%= @task.type_script %>
+</p>
+
+<p>
+  <strong>Number chapters:</strong>
+  <%= @task.number_chapters %>
+</p>
+
+<p>
+  <strong>Notes:</strong>
+  <%= @task.notes %>
+</p>
+
+<p>
+  <strong>Rush:</strong>
+  <%= @task.rush %>
+</p>
+
+<p>
+  <strong>Rate:</strong>
+  <%= @task.rate %>
+</p>
+
+<p>
+  <strong>Due date:</strong>
+  <%= @task.due_date %>
+</p>
+
+<p>
+  <strong>Vt file:</strong>
+  <%= @task.vt_file_id %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @task.status %>
+</p>
+
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back', tasks_path %>
