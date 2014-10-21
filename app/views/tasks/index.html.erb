@@ -1,15 +1,13 @@
 <h1>Listing tasks</h1>
 
-<table>
+<table class="table table-bordered table-striped">
   <thead>
     <tr>
-      <th>Vtn</th>
-      <th>Cops</th>
+      <th>Talen Name</th>
       <th>Client</th>
       <th>Video title</th>
-      <th>Type script</th>
-      <th>Number chapters</th>
       <th>Notes</th>
+      <th>Type script</th>
       <th>Rush</th>
       <th>Rate</th>
       <th>Due date</th>
@@ -23,12 +21,10 @@
     <% @tasks.each do |task| %>
       <tr>
         <td><%= task.vtn %></td>
-        <td><%= task.cops %></td>
         <td><%= task.client %></td>
         <td><%= task.video_title %></td>
-        <td><%= task.type_script %></td>
-        <td><%= task.number_chapters %></td>
         <td><%= task.notes %></td>
+        <td><%= task.type_script %></td>
         <td><%= task.rush %></td>
         <td><%= task.rate %></td>
         <td><%= task.due_date %></td>

@@ -1,14 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Vtman</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <title>Voice Talent Manager</title>
+  <%= stylesheet_link_tag 'application' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+ <header class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="navbar-header">
+<a class="navbar-brand" href="#">Voice Talent Manager</a>
+</div>
 
+</div>
+</div>
+</header>
+<div class="container master-container">
+<ul class="breadcrumb">
+<%= yield :breadcrumb %>
+</ul>
+<div class='alert alert-info fade in' data-alert='alert'>
+	<h3>
+		<strong>
+			Voice Talen Manager, add a New Task, or don't.
+		</strong>
+	</h3>
+<p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.. </p>
+</div>
+<% if notice %>
+<div class="alert alert-success fade in" data-alert="alert">
+<a class="close" data-dismiss='alert' href="#">×</a>
+<p><%= notice %></p>
+</div>
+<% end %>
 <%= yield %>
+</div>
 
+<footer class="footer">
+	<div class="container">
+		<p>Copyright 2014<a href="http://gs.com"> VTMan</a></p>
+		<ul class="footer-links">
+  			<li><a href="http://gs">GS</a></li>
+  			<li class="muted">·</li>
+		</ul>
+	</div>
+</footer>
+<%= javascript_include_tag "application" %>
 </body>
 </html>
