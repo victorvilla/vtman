@@ -6,7 +6,6 @@
       <th>Path file</th>
       <th>Task</th>
       <th>Type</th>
-      <th>Status</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -17,7 +16,6 @@
         <td><%= vt_file.path_file %></td>
         <td><%= vt_file.task_id %></td>
         <td><%= vt_file.type %></td>
-        <td><%= vt_file.status %></td>
         <td><%= link_to 'Show', vt_file %></td>
         <td><%= link_to 'Edit', edit_vt_file_path(vt_file) %></td>
         <td><%= link_to 'Destroy', vt_file, method: :delete, data: { confirm: 'Are you sure?' } %></td>
