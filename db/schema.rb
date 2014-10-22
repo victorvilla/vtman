@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141022080330) do
+ActiveRecord::Schema.define(version: 20141022181748) do
+
+  create_table "assets", force: true do |t|
+    t.string   "title"
+    t.string   "file"
+    t.integer  "asset_type", limit: 1, default: 0
+    t.string   "s3_id"
+    t.string   "s3_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "status",     limit: 1, default: 0
+    t.integer  "task_id"
+  end
+
+  add_index "assets", ["task_id"], name: "index_assets_on_task_id"
 
   create_table "tasks", force: true do |t|
     t.string   "vtn"
