@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141020210646) do
+ActiveRecord::Schema.define(version: 20141022080330) do
 
   create_table "tasks", force: true do |t|
     t.string   "vtn"
@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 20141020210646) do
     t.boolean  "rush"
     t.decimal  "rate"
     t.datetime "due_date"
-    t.integer  "vt_file_id"
     t.integer  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -32,13 +31,5 @@ ActiveRecord::Schema.define(version: 20141020210646) do
 
   add_index "tasks", ["due_date"], name: "index_tasks_on_due_date"
   add_index "tasks", ["status"], name: "index_tasks_on_status"
-
-  create_table "vt_files", force: true do |t|
-    t.text     "path_file"
-    t.integer  "task_id"
-    t.integer  "type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
 end
