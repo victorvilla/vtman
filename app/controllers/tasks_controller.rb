@@ -26,8 +26,8 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     
-    # Adding status 1 as an not acknowledged
-    #@task.status: 1
+    # Change status as "not acknowledged"
+    @task.notacknowledged!
 
     respond_to do |format|
       if @task.save
