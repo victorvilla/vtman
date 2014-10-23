@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  file: MyString
+  asset_type: 1
+  s3_id: MyString
+  s3_date: MyString
+  created_at: 2014-10-22 11:17:48
+  updated_at: 2014-10-22 11:17:48
+  task_id: 
+
+two:
+  title: MyString
+  file: MyString
+  asset_type: 1
+  s3_id: MyString
+  s3_date: MyString
+  created_at: 2014-10-22 11:17:48
+  updated_at: 2014-10-22 11:17:48
+  task_id: 

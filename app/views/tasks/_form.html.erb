@@ -12,54 +12,48 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :vtn %><br>
-    <%= f.text_field :vtn %>
+    <%= f.label :voice_talent_user_id, 'Voice Talent Name *' %>
+    <%= f.select :voice_talent_user_id, VoiceTalentUser.all.collect { |u| [u.first_name.titleize + ' '+ u.last_name.titleize, u.id]}, :prompt => '- Select -' %>
   </div>
   <div class="field">
-    <%= f.label :cops %><br>
-    <%= f.text_field :cops %>
+    <%= f.label :guidespark_user_id, 'Voice Request Alias *' %>
+    <%= f.select :guidespark_user_id, GuidesparkUser.all.collect { |u| [u.first_name.titleize + ' ' + u.last_name.titleize, u.id]}, prompt: '- Select -' %>
   </div>
   <div class="field">
-    <%= f.label :client %><br>
-    <%= f.text_field :client %>
-  </div>
+    <%= f.label :client_id, 'Client Name' %>
+    <%= f.select :client_id, Client.all.collect { |u| [u.name.titleize, u.id]}, prompt: '- Select -' %>
+  </div>  
   <div class="field">
-    <%= f.label :video_title %><br>
+    <%= f.label :video_title, 'Video Title *' %>
     <%= f.text_field :video_title %>
   </div>
   <div class="field">
-    <%= f.label :type_script %><br>
-    <%= f.number_field :type_script %>
-  </div>
+    <%= f.label :type_script, "Type of script *" %>
+	<%= f.select :type_script, type_script_options, { prompt: '- Select type script -' } %>
+	</div>
   <div class="field">
-    <%= f.label :number_chapters %><br>
+    <%= f.label :number_chapters, '# of Chapters *' %>
     <%= f.number_field :number_chapters %>
   </div>
   <div class="field">
-    <%= f.label :notes %><br>
-    <%= f.text_field :notes %>
+    <%= f.label :notes, "#{:notes}" %>
+    <%= f.text_area :notes %>
   </div>
   <div class="field">
-    <%= f.label :rush %><br>
-    <%= f.check_box :rush %>
+    <%= f.label :due_date, 'Due Date *' %>
+    <%= f.date_field :due_date %>
   </div>
   <div class="field">
-    <%= f.label :rate %><br>
+    <%= f.label :rush, 'Rush *' %>
+	<%= f.select :rush, rush_options %>
+	<%= f.label :rush, 'Please select Yes only if you need within 24 hours.' %>
+  </div>
+  <div class="field">
+    <%= f.label :rate %>
     <%= f.text_field :rate %>
   </div>
-  <div class="field">
-    <%= f.label :due_date %><br>
-    <%= f.datetime_select :due_date %>
-  </div>
-  <div class="field">
-    <%= f.label :vt_file_id %><br>
-    <%= f.number_field :vt_file_id %>
-  </div>
-  <div class="field">
-    <%= f.label :status %><br>
-    <%= f.number_field :status %>
-  </div>
   <div class="actions">
-    <%= f.submit %>
+	* You must fill in these fields to create a new task.
+    <%= f.submit 'Create Request' %>
   </div>
 <% end %>

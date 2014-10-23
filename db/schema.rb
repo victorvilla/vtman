@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141022003423) do
+ActiveRecord::Schema.define(version: 20141022181748) do
+
+  create_table "assets", force: true do |t|
+    t.string   "title"
+    t.string   "file"
+    t.integer  "asset_type", limit: 1, default: 0
+    t.string   "s3_id"
+    t.string   "s3_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "status",     limit: 1, default: 0
+    t.integer  "task_id"
+  end
+
+  add_index "assets", ["task_id"], name: "index_assets_on_task_id"
 
   create_table "clients", force: true do |t|
     t.string   "name"
@@ -47,7 +61,6 @@ ActiveRecord::Schema.define(version: 20141022003423) do
     t.boolean  "rush"
     t.decimal  "rate"
     t.datetime "due_date"
-    t.integer  "vt_file_id"
     t.integer  "status"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -79,13 +92,5 @@ ActiveRecord::Schema.define(version: 20141022003423) do
   end
 
   add_index "voice_talent_users", ["is_active"], name: "index_voice_talent_users_on_is_active"
-
-  create_table "vt_files", force: true do |t|
-    t.text     "path_file"
-    t.integer  "task_id"
-    t.integer  "type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
 end

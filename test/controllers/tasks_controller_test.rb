@@ -18,7 +18,7 @@ class TasksControllerTest < ActionController::TestCase
 
   test "should create task" do
     assert_difference('Task.count') do
-      post :create, task: { client: @task.client, cops: @task.cops, due_date: @task.due_date, notes: @task.notes, number_chapters: @task.number_chapters, rate: @task.rate, rush: @task.rush, status: @task.status, type_script: @task.type_script, video_title: @task.video_title, vt_file_id: @task.vt_file_id, vtn: @task.vtn }
+      post :create, task: { client: @task.client, cops: @task.cops, due_date: @task.due_date, notes: @task.notes, number_chapters: @task.number_chapters, rate: @task.rate, rush: @task.rush, status: @task.status, type_script: @task.type_script, video_title: @task.video_title, vtn: @task.vtn }
     end
 
     assert_redirected_to task_path(assigns(:task))
@@ -35,7 +35,7 @@ class TasksControllerTest < ActionController::TestCase
   end
 
   test "should update task" do
-    patch :update, id: @task, task: { client: @task.client, cops: @task.cops, due_date: @task.due_date, notes: @task.notes, number_chapters: @task.number_chapters, rate: @task.rate, rush: @task.rush, status: @task.status, type_script: @task.type_script, video_title: @task.video_title, vt_file_id: @task.vt_file_id, vtn: @task.vtn }
+    patch :update, id: @task, task: { client: @task.client, cops: @task.cops, due_date: @task.due_date, notes: @task.notes, number_chapters: @task.number_chapters, rate: @task.rate, rush: @task.rush, status: @task.status, type_script: @task.type_script, video_title: @task.video_title, vtn: @task.vtn }
     assert_redirected_to task_path(assigns(:task))
   end
 

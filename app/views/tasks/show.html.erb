@@ -2,17 +2,17 @@
 
 <p>
   <strong>Vtn:</strong>
-  <%= @task.vtn %>
+  <%= @task.voice_talent_user.first_name %>
 </p>
 
 <p>
   <strong>Cops:</strong>
-  <%= @task.cops %>
+  <%= @task.guidespark_user.first_name %>
 </p>
 
 <p>
   <strong>Client:</strong>
-  <%= @task.client %>
+  <%= @task.client.name %>
 </p>
 
 <p>
@@ -51,14 +51,8 @@
 </p>
 
 <p>
-  <strong>Vt file:</strong>
-  <%= @task.vt_file_id %>
-</p>
-
-<p>
   <strong>Status:</strong>
   <%= @task.status %>
 </p>
 
-<%= link_to 'Edit', edit_task_path(@task) %> |
 <%= link_to 'Back', tasks_path %>
