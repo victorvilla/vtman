@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141022181748) do
+ActiveRecord::Schema.define(version: 20141023225344) do
 
   create_table "assets", force: true do |t|
     t.string   "title"
@@ -65,13 +65,14 @@ ActiveRecord::Schema.define(version: 20141022181748) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "voice_talent_user_id"
-    t.integer  "guidespark_user_id"
     t.integer  "client_id"
+    t.boolean  "deleted",              default: false
+    t.integer  "writer_id"
+    t.integer  "content_ops_id"
   end
 
   add_index "tasks", ["client_id"], name: "index_tasks_on_client_id"
   add_index "tasks", ["due_date"], name: "index_tasks_on_due_date"
-  add_index "tasks", ["guidespark_user_id"], name: "index_tasks_on_guidespark_user_id"
   add_index "tasks", ["status"], name: "index_tasks_on_status"
   add_index "tasks", ["voice_talent_user_id"], name: "index_tasks_on_voice_talent_user_id"
 
