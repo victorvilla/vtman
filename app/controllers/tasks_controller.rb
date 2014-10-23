@@ -25,6 +25,9 @@ class TasksController < ApplicationController
   # POST /tasks.json
   def create
     @task = Task.new(task_params)
+    
+    # Adding status 1 as an not acknowledged
+    #@task.status: 1
 
     respond_to do |format|
       if @task.save
@@ -69,6 +72,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:vtn, :cops, :client, :video_title, :type_script, :number_chapters, :notes, :rush, :rate, :due_date, :vt_file_id, :status)
+      params.require(:task).permit(:voice_talent_user_id, :guidespark_user_id, :client_id, :video_title, :type_script, :number_chapters, :notes, :rush, :rate, :due_date, :vt_file_id, :status)
     end
 end
