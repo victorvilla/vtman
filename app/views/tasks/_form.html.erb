@@ -13,15 +13,15 @@
 
   <div class="field">
     <%= f.label :voice_talent_user_id, 'Voice Talent Name *' %>
-    <%= f.select :voice_talent_user_id, VoiceTalentUser.all.collect { |u| [u.first_name.titleize + ' '+ u.last_name.titleize, u.id]}, :prompt => '- Select -' %>
+    <%= f.select :voice_talent_user_id, voice_talent_options, :prompt => '- Select -' %>
   </div>
   <div class="field">
-    <%= f.label :guidespark_user_id, 'Voice Request Alias *' %>
-    <%= f.select :guidespark_user_id, GuidesparkUser.all.collect { |u| [u.first_name.titleize + ' ' + u.last_name.titleize, u.id]}, prompt: '- Select -' %>
+    <%= f.label :content_ops_id, 'Voice Request Alias *' %>
+    <%= f.select :content_ops_id, content_ops_options, prompt: '- Select -' %>
   </div>
   <div class="field">
     <%= f.label :client_id, 'Client Name' %>
-    <%= f.select :client_id, Client.all.collect { |u| [u.name.titleize, u.id]}, prompt: '- Select -' %>
+    <%= f.select :client_id, client_options, prompt: '- Select -' %>
   </div>  
   <div class="field">
     <%= f.label :video_title, 'Video Title *' %>
