@@ -91,3 +91,8 @@ tasks = Task.create([{video_title: "Lorem ipsum dolor sit amet", type_script: Ta
   due_date: "2014-11-09", status:  Task.statuses[:acknowledged],
   voice_talent_user_id: talents.to_a[4].id, writer_id: gs.to_a[4].id, content_ops_id: gs.to_a[1].id,
   client_id: clients.to_a[3].id }])
+
+t = tasks.first
+t.assets.create([{title: "Script for Amazon", file: "ama01.pdf"},
+                      {title: "Voice for Amazon1", file: "voice.wav", asset_type: 1},
+                       {title: "Voice for Amazon2", file: "voice2.wav", asset_type: 1}])
