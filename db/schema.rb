@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141023225344) do
+ActiveRecord::Schema.define(version: 20141024200736) do
 
   create_table "assets", force: true do |t|
     t.string   "title"
@@ -37,6 +37,16 @@ ActiveRecord::Schema.define(version: 20141023225344) do
   end
 
   add_index "clients", ["is_active"], name: "index_clients_on_is_active"
+
+  create_table "events", force: true do |t|
+    t.integer  "event_type"
+    t.string   "feedback"
+    t.integer  "task_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "events", ["task_id"], name: "index_events_on_task_id"
 
   create_table "guidespark_users", force: true do |t|
     t.string   "first_name"
