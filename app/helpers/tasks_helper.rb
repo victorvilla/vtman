@@ -15,6 +15,17 @@ module TasksHelper
   def content_ops_options
     GuidesparkUser.active_content_ops.collect { |u| [u.first_name.titleize + ' ' + u.last_name.titleize, u.id]}
   end
+  
+  def next_work_date
+    next_date = Date.today + 1
+    if next_date.wday == 6 then
+      next_date + 2 
+    elsif next_date.wday == 0 then 
+      next_date + 1 
+    else 
+      next_date
+    end
+  end
     
   def rush_options
     {:'No' => :false, :'Yes' => :true}
