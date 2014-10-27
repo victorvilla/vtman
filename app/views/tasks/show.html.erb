@@ -1,34 +1,35 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Vtn:</strong>
+  <strong>Voice Talent Name: </strong>
   <%= @task.voice_talent_user.first_name %>
 </p>
 
 <p>
-  <strong>Cops:</strong>
-  <%= @task.guidespark_user.first_name %>
+  <strong>Voice Request Alias: </strong>
+  <%= @task.content_ops.first_name %>
 </p>
 
 <p>
-  <strong>Client:</strong>
+  <strong>Client Name: </strong>
   <%= @task.client.name %>
 </p>
 
 <p>
-  <strong>Video title:</strong>
+  <strong>Video Title: </strong>
   <%= @task.video_title %>
 </p>
 
 <p>
-  <strong>Type script:</strong>
+  <strong>Type of script: </strong>
   <%= @task.type_script %>
+
+  <% if @task.partial? %>
+    <strong>Number chapters: </strong>
+    <%= @task.number_chapters %>
+  <% end %>
 </p>
 
-<p>
-  <strong>Number chapters:</strong>
-  <%= @task.number_chapters %>
-</p>
 
 <p>
   <strong>Notes:</strong>
