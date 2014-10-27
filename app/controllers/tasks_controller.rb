@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-
+  before_action :get_hash, only: [:confirm]
   # GET /tasks
   # GET /tasks.json
   def index
@@ -19,6 +19,15 @@ class TasksController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
+  end
+
+  def confirm
+    # Set the new status to the task
+    @task.acknowledged!
+
+    respond_to do |format|
+      format.html {redirect_to @task, notice: "Voice Request ##{@task.id} was confirmed!"}
+    end
   end
 
   # POST /tasks
@@ -66,6 +75,13 @@ class TasksController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
+    def get_hash
+      # Get the Task where status is notacknowledged and the event is the given parameter
+      @task = Task.joins(:events).where(status: Task.statuses[:notacknowledged],
+                                        events:{ event_type: 1,
+                                                 feedback: params[:hash] }).take or not_found('Confirmation not found')
+    end
     def set_task
       @task = Task.find(params[:id])
     end
