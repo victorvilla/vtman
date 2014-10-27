@@ -1,7 +1,7 @@
 module TasksHelper
   
   def type_script_options
-    { :'Full script' => :full, :'Partial script' => :partial, :'Correction' => :correction }
+    {:'Full script' => :full, :'Partial script' => :partial, :'Correction' => :correction}
   end
   
   def client_options

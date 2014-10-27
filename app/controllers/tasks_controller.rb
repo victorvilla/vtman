@@ -1,10 +1,12 @@
+require 'digest'
+
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-
+  before_action :get_hash, only: [:confirm]
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all.decorate
+    @tasks = Task.includes(:scripts, :uploads, :client, :voice_talent_user).all.decorate
   end
 
   # GET /tasks/1
@@ -28,6 +30,15 @@ class TasksController < ApplicationController
     end
   end
 
+  def confirm
+    # Set the new status to the task
+    @task.acknowledged!
+
+    respond_to do |format|
+      format.html {redirect_to @task, notice: "Voice Request ##{@task.id} was confirmed!"}
+    end
+  end
+
   # POST /tasks
   # POST /tasks.json
   def create
@@ -37,6 +48,12 @@ class TasksController < ApplicationController
     
     # Change status as "not acknowledged"
     @task.notacknowledged!
+
+    # TODO: Change the hash to something not predictable as the task.ID
+    @task.events.create([{event_type: 0, feedback: "Voice request created"},
+                         {event_type: 1, feedback: Digest::MD5.hexdigest(@task.id.to_s)}])
+
+    # TODO: Send email
 
     respond_to do |format|
       if @task.save
@@ -75,6 +92,13 @@ class TasksController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+
+    def get_hash
+      # Get the Task where status is notacknowledged and the event is the given parameter
+      @task = Task.joins(:events).where(status: Task.statuses[:notacknowledged],
+                                        events:{ event_type: 1,
+                                                 feedback: params[:hash] }).take or not_found('Confirmation not found')
+    end
     def set_task
       @task = Task.find(params[:id])
     end
