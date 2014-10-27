@@ -20,11 +20,20 @@ class TasksController < ApplicationController
   # GET /tasks/1/edit
   def edit
   end
+  
+  def upload
+    uploaded_io = params[:task][:file]
+    File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+      file.write(uploaded_io.read)
+    end
+  end
 
   # POST /tasks
   # POST /tasks.json
   def create
     @task = Task.new(task_params)
+    
+    upload
     
     # Change status as "not acknowledged"
     @task.notacknowledged!
@@ -72,6 +81,6 @@ class TasksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:voice_talent_user_id, :guidespark_user_id, :client_id, :video_title, :type_script, :number_chapters, :notes, :rush, :rate, :due_date, :status)
+      params.require(:task).permit(:voice_talent_user_id, :content_ops_id, :client_id, :video_title, :type_script, :number_chapters, :notes, :rush, :rate, :due_date, :status, :file)
     end
 end
