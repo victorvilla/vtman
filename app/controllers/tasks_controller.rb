@@ -1,3 +1,5 @@
+require 'digest'
+
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :get_hash, only: [:confirm]
@@ -37,6 +39,12 @@ class TasksController < ApplicationController
     
     # Change status as "not acknowledged"
     @task.notacknowledged!
+
+    # TODO: Change the hash to something not predictable as the task.ID
+    @task.events.create([{event_type: 0, feedback: "Voice request created"},
+                         {event_type: 1, feedback: Digest::MD5.hexdigest(@task.id.to_s)}])
+
+    # TODO: Send email
 
     respond_to do |format|
       if @task.save
