@@ -1,14 +1,26 @@
 class TaskDecorator < Draper::Decorator
   delegate_all
 
-
-
   def mdy
-    object.due_date.strftime("%m- %d - %Y")
+    object.due_date.strftime("%m- %d - %Y") unless object.due_date.nil?
   end
 
   def rate
     h.number_to_currency(object.rate, precision: 2)
+  end
+
+  def get_file(property)
+    s = object.send(property).last
+    return "" if s.nil?
+    h.link_to(s.file)
+  end
+
+  def script
+    self.get_file(:scripts)
+  end
+
+  def deliverable
+    self.get_file(:uploads)
   end
 
   def rush_status

@@ -6,7 +6,7 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.all.decorate
+    @tasks = Task.includes(:scripts, :uploads, :client, :voice_talent_user).all.decorate
   end
 
   # GET /tasks/1
