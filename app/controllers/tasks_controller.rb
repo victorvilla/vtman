@@ -3,6 +3,7 @@ require 'digest'
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :get_hash, only: [:confirm]
+  before_action :logged_in_user, only: [:index, :new]
   # GET /tasks
   # GET /tasks.json
   def index
@@ -114,6 +115,13 @@ class TasksController < ApplicationController
       @task = Task.joins(:events).where(status: Task.statuses[:notacknowledged],
                                         events:{ event_type: 1,
                                                  feedback: params[:hash] }).take or not_found('Confirmation not found')
+    end
+
+    def logged_in_user
+      unless logged_in?
+        flash[:danger] = "Please log in."
+        redirect_to login_url
+      end
     end
 
     def set_task
