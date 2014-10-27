@@ -10,7 +10,7 @@ class Task < ActiveRecord::Base
   has_many :assets, dependent: :destroy
   
   enum status: { notacknowledged: 0, acknowledged: 1, wip: 2, finished: 3, done: 4, overdue: 5 }
-  #enum type_script: {full: 0, partial: 1, correction: 2}
+  enum type_script: { full: 1, partial: 2, correction: 3 }
   
   
   validates :video_title, :presence => true, :length => { :minimum => 1, :maximum => 100 }
