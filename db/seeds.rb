@@ -83,16 +83,18 @@ gs = GuidesparkUser.create([{first_name: 'James', last_name: 'Otto', email: 'jam
   profile: 2, office_address: '1350 Willow Road Suite 201', office_phone: '1231231231'},
   {first_name: 'Lynda', last_name: 'Wiggins',
    email: 'lynda_wiggins@gs.com', profile: 1, office_address: '1080 Hamilton Ave',
-   office_phone: '4564564564'},
+   office_phone: '4564564564', password: "Lynda", password_confirmation: "Lynda"},
   {first_name: 'Jim', last_name: 'Ruiz', email: 'jim_ruiz@gs.com',
-   profile: 1, office_address: '1350 Willow Road Suite 201', office_phone: '7897897897'},
+   profile: 1, office_address: '1350 Willow Road Suite 201', office_phone: '7897897897',
+   password: "Jim", password_confirmation: "Jim"},
   {first_name: 'Mayra', last_name: 'Jhonson', email: 'mayra_jhonson@gs.com',
-  profile: 2, office_address: '1080 Hamilton Ave', office_phone: '0240240240'},
+  profile: 2, office_address: '1080 Hamilton Ave', office_phone: '0240240240',
+  password: "Mayra", password_confirmation: "Mayra"},
   {first_name: 'Diego', last_name: 'Moore', email: 'diego_moore@gs.com',
   profile: 2, office_address: 'Boston, US', office_phone: '681681681'},
   {first_name: 'Nathan', last_name: 'Stark', email: 'nathan_stark@gs.com',
   profile: 1, office_address: '1350 Willow Road Suite 201', office_phone: '3573573573',
-  is_active: 0}
+  is_active: 0, password: "Natham", password_confirmation: "Nathm"}
                     ])
 
 if Task.any?
