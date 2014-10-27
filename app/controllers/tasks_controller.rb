@@ -21,10 +21,14 @@ class TasksController < ApplicationController
 
   # GET /tasks/1/edit
   def edit
+    @readonly = true
+     respond_to do |format|
+       format.html {render :edit}
+     end
   end
   
-  def upload
-    uploaded_io = params[:task][:file]
+  def upload(file)
+    uploaded_io = file
     File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
       file.write(uploaded_io.read)
     end
@@ -44,7 +48,6 @@ class TasksController < ApplicationController
   def create
     @task = Task.new(task_params)
     
-    upload
     
     # Change status as "not acknowledged"
     @task.notacknowledged!
@@ -54,6 +57,9 @@ class TasksController < ApplicationController
                          {event_type: 1, feedback: Digest::MD5.hexdigest(@task.id.to_s)}])
 
     # TODO: Send email
+    file = params[:task][:file]
+    self.add_assets(file, false)
+
 
     respond_to do |format|
       if @task.save
@@ -70,6 +76,10 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1.json
   def update
     respond_to do |format|
+      file = params[:task][:file]
+      self.add_assets(file, params[:task][:deliverable])
+      @task.finished!
+      
       if @task.update(task_params)
         format.html { redirect_to @task, notice: 'Task was successfully updated.' }
         format.json { render :show, status: :ok, location: @task }
@@ -90,6 +100,12 @@ class TasksController < ApplicationController
     end
   end
 
+    def add_assets(file, deliverable)
+        self.upload(file)
+        @task.assets.create([{asset_type: deliverable ? 1 : 0, file: file.original_filename, 
+                          title: file.original_filename}])
+    end
+
   private
     # Use callbacks to share common setup or constraints between actions.
 
@@ -99,12 +115,15 @@ class TasksController < ApplicationController
                                         events:{ event_type: 1,
                                                  feedback: params[:hash] }).take or not_found('Confirmation not found')
     end
+
     def set_task
       @task = Task.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def task_params
-      params.require(:task).permit(:voice_talent_user_id, :content_ops_id, :client_id, :video_title, :type_script, :number_chapters, :notes, :rush, :rate, :due_date, :status, :file)
+      params.require(:task).permit(:voice_talent_user_id, :content_ops_id, :client_id, :video_title,
+                                   :type_script, :number_chapters, :notes, :rush, :rate, :due_date,
+                                   :status, :file)
     end
 end
