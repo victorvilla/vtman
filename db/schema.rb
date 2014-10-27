@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141024200736) do
+ActiveRecord::Schema.define(version: 20141027180047) do
 
   create_table "assets", force: true do |t|
     t.string   "title"
@@ -52,12 +52,13 @@ ActiveRecord::Schema.define(version: 20141024200736) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
-    t.boolean  "is_active",      default: true
+    t.boolean  "is_active",       default: true
     t.integer  "profile"
     t.string   "office_address"
     t.string   "office_phone"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "password_digest"
   end
 
   add_index "guidespark_users", ["is_active"], name: "index_guidespark_users_on_is_active"
