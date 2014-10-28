@@ -34,12 +34,12 @@
 	</h3>
 <p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.. </p>
 </div>
-<% if notice %>
-<div class="alert alert-success fade in" data-alert="alert">
-<a class="close" data-dismiss='alert' href="#">×</a>
-<p><%= notice %></p>
-</div>
-<% end %>
+      <% flash.each do |message_type, message| %>
+        <div class="alert alert-<%= message_type %>"><%= message %>
+          <a class="close" data-dismiss='alert' href="#">×</a>
+        </div>
+        
+      <% end %>
 <%= yield %>
 </div>
 
