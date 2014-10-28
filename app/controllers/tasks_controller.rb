@@ -38,6 +38,10 @@ class TasksController < ApplicationController
   def confirm
     # Set the new status to the task
     @task.acknowledged!
+    ContentMailer.acknowledged_email(@task).deliver
+
+    @task.events.create(event_type: 4, feedback: "Sent email to Content Ops for acknowledge")
+
     respond_to do |format|
       format.html {redirect_to tasks_path, notice: "Voice Request ##{@task.id} was confirmed!"}
     end
@@ -57,8 +61,7 @@ class TasksController < ApplicationController
     @user = @task.voice_talent_user
 
     @task.events.create([{event_type: 0, feedback: "Voice request created"},
-                         {event_type: 1, feedback: hash },
-                         {event_type: 2, feedback: "Email sent: #{ @user.email }"}])
+                         {event_type: 1, feedback: hash }])
 
     file = params[:task][:file]
     self.add_assets(file, false)
@@ -71,6 +74,8 @@ class TasksController < ApplicationController
 
         VoicetalentMailer.new_request_email(@task, @user, url).deliver
         ContentMailer.new_request_email(@task, @task.content_ops, url).deliver
+        @task.events.create([{event_type: 2, feedback: "Email sent to Voice Talent: #{ @user.email }"},
+                             {event_type: 3, feedback: "Email sent to Content Ops: #{@task.content_ops.email}"}])
 
         format.html { redirect_to tasks_path, notice: 'Task was successfully created.' }
         format.json { render :show, status: :created, location: @task }
