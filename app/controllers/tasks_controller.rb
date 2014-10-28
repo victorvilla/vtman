@@ -95,6 +95,10 @@ class TasksController < ApplicationController
       @task.finished!
       
       if @task.update(task_params)
+        @task.events.create([{event_type: 5, feedback: "Uploaded file: #{file}"},
+                             {event_type: 6, feedback: "Email sent to Content Ops notifing the upload: #{@task.content_ops.email}"}])
+        ContentMailer.file_uploaded_email(@task).deliver
+
         format.html { redirect_to @task, notice: 'Task was successfully updated.' }
         format.json { render :show, status: :ok, location: @task }
       else
