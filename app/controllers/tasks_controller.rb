@@ -40,7 +40,7 @@ class TasksController < ApplicationController
     @task.acknowledged!
 
     respond_to do |format|
-      format.html {redirect_to @task, notice: "Voice Request ##{@task.id} was confirmed!"}
+      format.html {redirect_to tasks_path, notice: "Voice Request ##{@task.id} was confirmed!"}
     end
   end
 
@@ -54,17 +54,25 @@ class TasksController < ApplicationController
     @task.notacknowledged!
 
     # TODO: Change the hash to something not predictable as the task.ID
-    @task.events.create([{event_type: 0, feedback: "Voice request created"},
-                         {event_type: 1, feedback: Digest::MD5.hexdigest(@task.id.to_s)}])
+    hash = Digest::MD5.hexdigest(@task.id.to_s)
+    @user = @task.voice_talent_user
 
-    # TODO: Send email
+    @task.events.create([{event_type: 0, feedback: "Voice request created"},
+                         {event_type: 1, feedback: hash },
+                         {event_type: 2, feedback: "Email sent: #{ @user.email }"}])
+
     file = params[:task][:file]
     self.add_assets(file, false)
 
 
     respond_to do |format|
       if @task.save
-        format.html { redirect_to @task, notice: 'Task was successfully created.' }
+
+        url = "http://localhost:10534/confirm/#{hash}"
+
+        VoicetalentMailer.new_request_email(@task, @user, url).deliver
+
+        format.html { redirect_to tasks_path, notice: 'Task was successfully created.' }
         format.json { render :show, status: :created, location: @task }
       else
         format.html { render :new }
