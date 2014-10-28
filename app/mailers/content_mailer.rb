@@ -1,6 +1,6 @@
-class VoicetalentMailer < ActionMailer::Base
+class ContentMailer < ActionMailer::Base
+	
   default from: "from@example.com"
-
   def new_request_email(task, user, url)
     @task = task.decorate
     @user = user

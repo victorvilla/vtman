@@ -38,7 +38,6 @@ class TasksController < ApplicationController
   def confirm
     # Set the new status to the task
     @task.acknowledged!
-
     respond_to do |format|
       format.html {redirect_to tasks_path, notice: "Voice Request ##{@task.id} was confirmed!"}
     end
@@ -71,6 +70,7 @@ class TasksController < ApplicationController
         url = "http://localhost:10534/confirm/#{hash}"
 
         VoicetalentMailer.new_request_email(@task, @user, url).deliver
+        ContentMailer.new_request_email(@task, @task.content_ops, url).deliver
 
         format.html { redirect_to tasks_path, notice: 'Task was successfully created.' }
         format.json { render :show, status: :created, location: @task }
