@@ -19,7 +19,7 @@ talents = VoiceTalentUser.create([
     {first_name: 'Heather', last_name: 'Capri', email: 'heather_capri@vt.com',
     office_phone: '7878787878', full_rate: 175.0, rush_full_rate: 175.0,
     partial_rate: 15.0, rush_partial_rate: 15.0, correction_rate: 0.0, is_veteran: 1},
-    {first_name: 'Steve', last_name: 'Wojitas', email: 'steve_wojitas@vt.com',
+    {first_name: 'Steve', last_name: 'Wojitas', email: 'victor.villa.jimenez@gmail.com',
     office_phone: '3434343434', full_rate: 80.0, rush_full_rate: 130.0,
     partial_rate: 8.0, rush_partial_rate: 16.0, correction_rate: 0.0, is_veteran: 1},
     {first_name: 'Joy', last_name: 'Shaw', email: 'joy_shaw@vt.com',
@@ -79,8 +79,13 @@ end
 #     1 ... C-Ops
 #     2 ... Writer
 
-gs = GuidesparkUser.create([{first_name: 'James', last_name: 'Otto', email: 'james_otto@gs.com',
-  profile: 2, office_address: '1350 Willow Road Suite 201', office_phone: '1231231231'},
+gs = GuidesparkUser.create([
+  {first_name: 'Victor', last_name: 'Villa', email: 'vvilla@guidespark.com',
+  profile: 1, office_address: '1350 Willow Road Suite 201', office_phone: '1231231231',
+  password: "Victor", password_confirmation: "Victor"},
+  {first_name: 'James', last_name: 'Otto', email: 'james_otto@gs.com',
+  profile: 2, office_address: '1350 Willow Road Suite 201', office_phone: '1231231231',
+  password: "James", password_confirmation: "James"},
   {first_name: 'Lynda', last_name: 'Wiggins',
    email: 'lynda_wiggins@gs.com', profile: 1, office_address: '1080 Hamilton Ave',
    office_phone: '4564564564', password: "Lynda", password_confirmation: "Lynda"},
