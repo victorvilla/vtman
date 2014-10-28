@@ -8,7 +8,6 @@ $ ->
     if voice_talent_user_id == ''
        $("#task_type_script").val('')
        $("#task_number_chapters").val('')
-       $('#task_number_chapters').attr("disabled", "disabled")
        $('#task_rush').removeAttr("disabled")
        return
 
@@ -43,11 +42,11 @@ $ ->
     console.log "type_script_id : " + type_script_id 
     $("#task_number_chapters").val(1)
     if type_script_id == 'partial'
-      $('#task_number_chapters').removeAttr("disabled")
+      $('.chapters').show()
     else if type_script_id == 'full'
-      $('#task_number_chapters').attr("disabled", "disabled")
+      $('.chapters').hide()
     else if type_script_id == 'correction'
-      $('#task_number_chapters').attr("disabled", "disabled")
+      $('.chapters').hide()
     
     voice_talent_user_id = $('#task_voice_talent_user_id').find(":selected").val()
     if voice_talent_user_id == ''
@@ -124,7 +123,7 @@ validate_rate = (vt) ->
         total = vt.correction_rate
         console.log '. correction_rate: ' + vt.correction_rate
       
-      console.log '. total: ' + total
       $('#task_rate').val(total)
+      console.log '. total: ' + $('#task_rate').val()
       $('.total').html('$ ' + total)
       #$('.total').html("\<%= number_to_currency " + total + "\%>")
