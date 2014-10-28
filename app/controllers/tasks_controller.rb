@@ -73,7 +73,7 @@ class TasksController < ApplicationController
         url = "http://localhost:10534/confirm/#{hash}"
 
         VoicetalentMailer.new_request_email(@task, @user, url).deliver
-        ContentMailer.new_request_email(@task, @task.content_ops, url).deliver
+        ContentMailer.new_request_email(@task, @user).deliver
         @task.events.create([{event_type: 2, feedback: "Email sent to Voice Talent: #{ @user.email }"},
                              {event_type: 3, feedback: "Email sent to Content Ops: #{@task.content_ops.email}"}])
 
