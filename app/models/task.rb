@@ -2,6 +2,7 @@ class Task < ActiveRecord::Base
   
   # mount_uploader :file, 
   attr_accessor :file
+  attr_accessor :rate, :decimal
   
   belongs_to :client
   belongs_to :writer, :class_name => 'GuidesparkUser'
