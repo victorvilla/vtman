@@ -10,14 +10,14 @@ class TasksController < ApplicationController
     @tasks = Task.includes(:scripts, :uploads, :client, :voice_talent_user).all.decorate
   end
 
-  # GET /tasks/1
-  # GET /tasks/1.json
-  def show
-  end
-
   # GET /tasks/new
   def new
-    @task = Task.new
+    if iswriter?
+      @task = Task.new
+    else
+      flash[:danger] = "Only writers can add a New Voice Request."
+      redirect_to tasks_path
+    end
   end
 
   # GET /tasks/1/edit

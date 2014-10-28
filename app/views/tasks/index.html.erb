@@ -20,7 +20,7 @@
   <tbody>
     <% @tasks.each_with_index do |task, index | %>
       <tr>
-        <td><%= link_to index + 1, task %></td>
+        <td><%= index + 1 %></td>
         <td><%= task.voice_talent_user.first_name %></td>
         <td><%= task.client.name %></td>
         <td><%= task.video_title %></td>
@@ -37,5 +37,6 @@
 </table>
 
 <br>
-
-<%= link_to 'New Task', new_task_path %>
+<% if iswriter? %>
+  <%= link_to 'New Task', new_task_path %>
+<% end %>

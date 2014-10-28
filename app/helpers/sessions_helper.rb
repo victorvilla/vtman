@@ -20,4 +20,7 @@ module SessionsHelper
     @current_user = nil
   end
 
+  def iswriter?
+    @current_user.profile == 2
+  end
 end
