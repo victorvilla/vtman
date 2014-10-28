@@ -60,6 +60,42 @@ $ ->
       
     $.get '/tasks/new/rate/', {voice_talent_user_id}, callback, 'json'
 
+$ ->
+  $('#task_number_chapters').change ->
+    number_chapters = $('#task_number_chapters').val()
+    if number_chapters == ''
+       return
+    console.log "number_chapters : " + number_chapters 
+    
+    voice_talent_user_id = $('#task_voice_talent_user_id').find(":selected").val()
+    if voice_talent_user_id == ''
+      return
+    callback = (response) -> 
+      vt = response.voice_talent_user
+      console.log 'correction_rate: ' + vt.correction_rate + '. rush_full_rate: ' + vt.rush_full_rate + '. rush_partial_rate: ' + vt.rush_partial_rate + '. full_rate: ' + vt.full_rate + '. partial_rate: ' + vt.partial_rate
+
+      validate_rate(vt)
+      
+    $.get '/tasks/new/rate/', {voice_talent_user_id}, callback, 'json'
+
+$ ->
+  $('#task_rush').change ->
+    task_rush = $('#task_rush option:selected').val()
+    if task_rush == ''
+       return
+    console.log "task_rush : " + task_rush 
+    
+    voice_talent_user_id = $('#task_voice_talent_user_id').find(":selected").val()
+    if voice_talent_user_id == ''
+      return
+    callback = (response) -> 
+      vt = response.voice_talent_user
+      console.log 'correction_rate: ' + vt.correction_rate + '. rush_full_rate: ' + vt.rush_full_rate + '. rush_partial_rate: ' + vt.rush_partial_rate + '. full_rate: ' + vt.full_rate + '. partial_rate: ' + vt.partial_rate
+
+      validate_rate(vt)
+      
+    $.get '/tasks/new/rate/', {voice_talent_user_id}, callback, 'json'
+
 validate_rate = (vt) ->
       voice_talent_user_id = $('#task_voice_talent_user_id').find(":selected").val()
       type_script_id = $('#task_type_script option:selected').val()
@@ -90,4 +126,5 @@ validate_rate = (vt) ->
       
       console.log '. total: ' + total
       $('#task_rate').val(total)
-      $('.total').html(total)
+      $('.total').html('$ ' + total)
+      #$('.total').html("\<%= number_to_currency " + total + "\%>")
