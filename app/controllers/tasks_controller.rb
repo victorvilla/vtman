@@ -14,6 +14,7 @@ class TasksController < ApplicationController
   def new
     if iswriter?
       @task = Task.new
+      @voiceTalentUsers = VoiceTalentUser.actives
     else
       flash[:danger] = "Only writers can add a New Voice Request."
       redirect_to tasks_path
@@ -26,6 +27,16 @@ class TasksController < ApplicationController
      respond_to do |format|
        format.html {render :edit}
      end
+  end
+  
+  # GET /tasks/rate
+  # GET /tasks/rate.json
+  def rate
+    respond_to do |format|
+      voice_talent_user = params[:voice_talent_user_id]
+      vt = VoiceTalentUser.actives.find(voice_talent_user)
+      format.json { render json: { :voice_talent_user => vt } , content_type: 'text/json' }
+    end
   end
   
   def upload(file)
@@ -149,6 +160,6 @@ class TasksController < ApplicationController
     def task_params
       params.require(:task).permit(:voice_talent_user_id, :content_ops_id, :client_id, :video_title,
                                    :type_script, :number_chapters, :notes, :rush, :rate, :due_date,
-                                   :status, :file)
+                                   :status, :file, :rate)
     end
 end

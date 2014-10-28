@@ -1,14 +1,16 @@
 <% disabled ||= false %>
 
+
+
 <div class="row">
   <div class="col-xs-9">
 	<div class="row">
 		<div class="col-xs-3 control-label">
 			<%= f.label :voice_talent_user_id, 'Voice Talent Name *' %>
 		</div>
-		<div class="col-xs-6">
+		<div class="col-xs-6">		
 			<%= f.select :voice_talent_user_id, voice_talent_options,  
-			    {:prompt => '- Select Voice Talent -'},disabled: disabled %>
+			    {:prompt => '- Select Voice Talent -'},disabled: disabled, class:'test'%>
 		</div>
 	</div>
 	<div class="row">
@@ -52,7 +54,7 @@
 							<%= f.label :number_chapters, '# of Chapters *'%>
 						</div>
 						<div class="col-xs-4">
-							<%= f.number_field :number_chapters, min: 1, max: 99, disabled: disabled  %>
+							<%= f.number_field :number_chapters, min: 1, max: 99, disabled: true%>
 						</div>
 					</div>
 				</div>
@@ -80,7 +82,7 @@
 			<%= f.label :rush, 'Rush *' %>
 		</div>
 		<div class="col-xs-6">
-			<%= f.select :rush, rush_options, disabled: disabled  %>
+			<%= f.select :rush, rush_options %>
 			<small>Please select Yes only if you need within 24 hours.</small>
 		</div>
 	</div>
@@ -89,7 +91,7 @@
 			<%= f.label :rate , 'Rate' %>
 		</div>
 		<div class="col-xs-6">
-			<p class="form-control-static">12.3</p>
+			<p class="form-control-static total"><%= f.hidden_field :rate, :value => 0.0 %></p>
 		</div>
 	</div>
 
