@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141027180047) do
+ActiveRecord::Schema.define(version: 20141028152444) do
 
   create_table "assets", force: true do |t|
     t.string   "title"
@@ -101,6 +101,8 @@ ActiveRecord::Schema.define(version: 20141027180047) do
     t.decimal  "correction_rate",   default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "nickname"
+    t.string   "digest"
   end
 
   add_index "voice_talent_users", ["is_active"], name: "index_voice_talent_users_on_is_active"
