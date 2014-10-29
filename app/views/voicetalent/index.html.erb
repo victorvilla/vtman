@@ -22,16 +22,16 @@
   <tbody>
     <% @tasks.each_with_index do |task, index | %>
       <tr>
-        <td><%= index + 1 %></td>
-        <td><%= task.client.name %></td>
-        <td><%= task.video_title %></td>
-        <td><%= task.notes %></td>
-        <td><%= task.mdy %></td>
-        <td><%= task.rush_status %></td>
+        <td class="col-md-1"><%= index + 1 %></td>
+        <td class="col-md-2"><%= task.client.name %></td>
+        <td class="col-md-4"><%= task.video_title %></td>
+        <td class="col-md-3"><%= task.notes %></td>
+        <td class="col-md-2"><%= task.mdy %></td>
+        <td class="col-md-1"><%= task.rush_status %></td>
         <td><%= task.rate %></td>
         <td><%= task.script %></td>
         <td><%= task.deliverable %></td>
-        <td><%= task.show_status %></div></td>
+        <td><div class="text-center"><%= task.show_status %></div></td>
       </tr>
     <% end %>
   </tbody>
