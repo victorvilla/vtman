@@ -28,7 +28,7 @@ class TasksController < ApplicationController
        format.html {render :edit}
      end
   end
-  
+
   # GET /tasks/rate
   # GET /tasks/rate.json
   def rate
@@ -38,7 +38,7 @@ class TasksController < ApplicationController
       format.json { render json: { :voice_talent_user => vt } , content_type: 'text/json' }
     end
   end
-  
+
   def upload(file)
     uploaded_io = file
     File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
@@ -54,7 +54,9 @@ class TasksController < ApplicationController
     @task.events.create(event_type: 4, feedback: "Sent email to Content Ops for acknowledge")
 
     respond_to do |format|
-      format.html {redirect_to tasks_path, notice: "Voice Request ##{@task.id} was confirmed!"}
+      flash[:notice] = "Voice Request ##{@task.id} was confirmed!"
+      vt = @task.voice_talent_user
+      format.html {redirect_to "/dashboard/#{vt.nickname}/#{vt.digest}" }
     end
   end
 
@@ -62,8 +64,7 @@ class TasksController < ApplicationController
   # POST /tasks.json
   def create
     @task = Task.new(task_params)
-    
-    
+
     # Change status as "not acknowledged"
     @task.notacknowledged!
 
@@ -104,7 +105,7 @@ class TasksController < ApplicationController
       file = params[:task][:file]
       self.add_assets(file, params[:task][:deliverable])
       @task.finished!
-      
+
       if @task.update(task_params)
         @task.events.create([{event_type: 5, feedback: "Uploaded file: #{file}"},
                              {event_type: 6, feedback: "Email sent to Content Ops notifing the upload: #{@task.content_ops.email}"}])
@@ -131,7 +132,7 @@ class TasksController < ApplicationController
 
     def add_assets(file, deliverable)
         self.upload(file)
-        @task.assets.create([{asset_type: deliverable ? 1 : 0, file: file.original_filename, 
+        @task.assets.create([{asset_type: deliverable ? 1 : 0, file: file.original_filename,
                           title: file.original_filename}])
     end
 

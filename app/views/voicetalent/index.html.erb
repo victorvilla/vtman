@@ -1,0 +1,40 @@
+<% if @user.nil? %>
+  <h1> Dashboard not found </h1>
+<% else %>
+<h1>Voice Talent Dashboard for <%= @user.nickname %></h1>
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Client</th>
+      <th>Video Title</th>
+      <th>Notes</th>
+      <th>Due date</th>
+      <th>Rush</th>
+      <th>Rate</th>
+      <th>Download</th>
+      <th>Deliverable</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each_with_index do |task, index | %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= task.client.name %></td>
+        <td><%= task.video_title %></td>
+        <td><%= task.notes %></td>
+        <td><%= task.mdy %></td>
+        <td><%= task.rush_status %></td>
+        <td><%= task.rate %></td>
+        <td><%= task.script %></td>
+        <td><%= task.plus %> <%= task.deliverable %></td>
+        <td><%= task.show_status %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+<br>
