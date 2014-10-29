@@ -3,7 +3,7 @@
 <% else %>
 <h1>Voice Talent Dashboard for <%= @user.nickname %></h1>
 
-<table class="table table-bordered table-striped">
+<table id="tasks" class="table table-bordered table-striped ">
   <thead>
     <tr>
       <th>#</th>
@@ -30,8 +30,8 @@
         <td><%= task.rush_status %></td>
         <td><%= task.rate %></td>
         <td><%= task.script %></td>
-        <td><%= task.plus %> <%= task.deliverable %></td>
-        <td><%= task.show_status %></td>
+        <td><%= task.deliverable %></td>
+        <td><%= task.show_status %></div></td>
       </tr>
     <% end %>
   </tbody>
