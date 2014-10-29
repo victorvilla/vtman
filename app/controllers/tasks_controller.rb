@@ -160,6 +160,6 @@ class TasksController < ApplicationController
     def task_params
       params.require(:task).permit(:voice_talent_user_id, :content_ops_id, :client_id, :video_title,
                                    :type_script, :number_chapters, :notes, :rush, :rate, :due_date,
-                                   :status, :file, :rate)
+                                   :status, :file)
     end
 end
