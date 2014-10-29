@@ -39,6 +39,15 @@ class TasksController < ApplicationController
     end
   end
 
+  def status
+    #TODO: Secure this API
+    task = Task.find_by id: params[:id]
+    respond_to do |format|
+      response = task.id unless task.nil?
+      format.json { render json: response, content_type: 'text/json' }
+    end
+  end
+
   def upload(file)
     uploaded_io = file
     File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
