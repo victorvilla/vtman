@@ -137,7 +137,3 @@ tasks = Task.create!([{video_title: "Lorem ipsum dolor sit amet", type_script: T
   client_id: clients.to_a[3].id }])
 
 
-t = tasks.first
-t.assets.create([{title: "Script for Amazon", file: "ama01.pdf"},
-                      {title: "Voice for Amazon1", file: "voice.wav", asset_type: 1},
-                       {title: "Voice for Amazon2", file: "voice2.wav", asset_type: 1}])
