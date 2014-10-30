@@ -11,7 +11,7 @@
       <th>Due date</th>
       <th>Rush</th>
       <th>Rate</th>
-      <th>Download</th>
+      <th>Script</th>
       <th>Deliverable</th>
       <th>Status</th>
     </tr>
@@ -26,16 +26,20 @@
         <td><%= task.video_title %></td>
         <td><%= task.notes %></td>
         <td><%= task.mdy %></td>
-        <td><%= task.rush_status %></td>
+        <td><div class="text-center"><%= task.rush_status %></div></td>
         <td><%= task.rate %></td>
-        <td><%= task.script %></td>
-        <td><%= task.deliverable %></td>
-        <td><%= task.show_status %></td>
+        <td><%= link_to tag(:span,  class: "glyphicon glyphicon-save text-primary"), task.script, :target => "_blank"%></td></td>
+        <td><%= content_tag :div,  tag(:span, id: "up-#{task.id}",
+                                       class: "#{task.download_icon}") %>
+                <%= task.deliverable%></td>
+        <td><%= content_tag(:div, tag(:span, class: "#{task.get_(:icon)} #{task.get_(:color)}") , class: "text-center") %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
+<br/>
+<%= image_tag "ribbon_admin.png", class: 'img-responsive center-block' %>
 <br>
 <% if iswriter? %>
   <%= link_to 'New Task', new_task_path %>
