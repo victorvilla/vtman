@@ -30,7 +30,7 @@ gem 'draper', '~> 1.3'
 
 
 gem 'bcrypt'
-
+gem 'bootstrap-datepicker-rails'
 # Use unicorn as the app server
 # gem 'unicorn'
 

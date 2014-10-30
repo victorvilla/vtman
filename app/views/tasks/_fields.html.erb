@@ -1,50 +1,44 @@
-<% disabled ||= false %>
-
-
-
-<div class="row">
-  <div class="col-xs-9">
-	<div class="row">
+	<% disabled ||= false %>
+	<div class="form-group">
 		<div class="col-xs-3 control-label">
 			<%= f.label :voice_talent_user_id, 'Voice Talent Name *' %>
 		</div>
 		<div class="col-xs-6">		
-			<%= f.select :voice_talent_user_id, voice_talent_options,  
-			    {:prompt => '- Select Voice Talent -'}, disabled: disabled, required: true %>
+			<%= f.select :voice_talent_user_id, voice_talent_options, {prompt: '- Select Voice Talent -'}, class:"form-control", disabled: disabled, required: true %>
 		</div>
 	</div>
-	<div class="row">
+	<div class="form-group">
 		<div class="col-xs-3 control-label">
 			<%= f.label :content_ops_id, 'Voice Request Alias *' %>
 		</div>
 		<div class="col-xs-6">
-			<%= f.select :content_ops_id, content_ops_options, {prompt: '- Select Voice Request Alies -'}, disabled: disabled, required: true %>
+			<%= f.select :content_ops_id, content_ops_options, {prompt: '- Select Voice Request Alies -'}, class:"form-control", disabled: disabled, required: true %>
 		</div>
 	</div>
-	<div class="row">
+	<div class="form-group">
 		<div class="col-xs-3 control-label">
-			<%= f.label :client_id, 'Client Name' %>
+			<%= f.label :client_id, 'Client Name *' %>
 		</div>
 		<div class="col-xs-6">
-			<%= f.select :client_id, client_options, { prompt: '- Select Client-' }, disabled: disabled %>
+			<%= f.select :client_id, client_options, {prompt: '- Select Client-'}, class:"form-control", disabled: disabled, required: true  %>
 		</div>
 	</div>
-	<div class="row">
+	<div class="form-group">
 		<div class="col-xs-3 control-label">
 			<%= f.label :video_title, 'Video Title *' %>
 		</div>
 		<div class="col-xs-6">
-			<%= f.text_field :video_title, size: 61, maxlength:100, disabled: disabled, required: true %>
+			<%= f.text_field :video_title, maxlength:100, class:"form-control", disabled: disabled, required: true %>
 		</div>
 	</div>
-	<div class="row">
+	<div class="form-group">
 		<div class="col-xs-3 control-label">
 			<%= f.label :type_script, "Type of script *" %>
 		</div>
 		<div class="col-xs-6">
 			<div class="row">
 				<div class="col-xs-4">
-					<%= f.select :type_script, type_script_options, { prompt: '- Select type script -' }, disabled: disabled, required: true %>
+					<%= f.select :type_script, type_script_options, { prompt: '- Select type script -' }, class:"form-control", disabled: disabled, required: true %>
 				</div>
 				<div class="col-xs-8">
 					<div class="row chapters">
@@ -52,7 +46,7 @@
 							<%= f.label :number_chapters, '# of Chapters *'%>
 						</div>
 						<div class="col-xs-4">
-							<%= f.number_field :number_chapters, min: 1, max: 99, required: true %>
+							<%= f.number_field :number_chapters, min: 1, max: 99, class:"form-control", required: true %>
 						</div>
 					</div>
 				</div>
@@ -61,28 +55,32 @@
 	</div>
 	<div class="form-group">
 		<div class="col-xs-3 control-label">
-			<%= f.label :notes, "#{:notes}" %>
+			<%= f.label :notes, "Notes" %>
 		</div>
 		<div class="col-xs-6">
-			<%= f.text_area :notes, maxlength: 250, cols: 63, rows: 4, disabled: disabled  %>
+			<%= f.text_area :notes, maxlength: 250, cols: 63, rows: 4, class:"form-control", disabled: disabled  %>
 		</div>
 	</div>
 	
-	<div class="row">
+	<div class="form-group">
 		<div class="col-xs-3 control-label">
 			<%= f.label :rush, 'Rush *' %>
 		</div>
 		<div class="col-xs-6">
-			<%= f.select :rush, rush_options, required: true %>
+			<%= f.select :rush, rush_options, { include_blank: false }, class:"form-control", required: true %>
 			<small>Please select Yes only if you need within 24 hours.</small>
 		</div>
 	</div>
-	<div class="row">
+	<div class="form-group">
 		<div class="col-xs-3 control-label">
 			<%= f.label :due_date, 'Due Date *' %>
 		</div>
-		<div class="col-xs-2">
-			<%= f.date_field :due_date, min: next_work_date, disabled: disabled, required: true  %>
+		<div class="col-xs-3">
+			<div class='input-group date'>
+			<!--<%= f.date_field :due_date, min: next_work_date, disabled: disabled, required: true  %>-->
+				<input type="text" id='task_due_date' class="form-control" required >
+				<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+			</div>
 		</div>
 	</div>
 	<div class="form-group">
@@ -90,7 +88,7 @@
 			<%= f.label :rate , 'Rate' %>
 		</div>
 		<div class="col-xs-6">
-			<p class="form-control-static total"></p>
+			<p class="form-control-static total"><%= number_to_currency @task.rate %></p>
 			<%= f.hidden_field :rate, :value => 0.0 %>
 		</div>
 	</div>
@@ -101,12 +99,12 @@
 			<div class="col-xs-3 control-label">
 				<%= f.label :file, 'Upload script *' %>
 			</div>
-			<div class="col-xs-6">
-				<%= f.file_field :file, accept: 'application/pdf,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.wordprocessingml.template', required: true %>
+			<div id="test" class="col-xs-6">
+				<%= f.file_field :file, accept: 'application/pdf,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.wordprocessingml.template', class:"form-control",  required: true %>
 			</div>
 	    </div>
 	<% else %>
-	   <div class="row">
+	   <div class="form-group">
 			<div class="col-xs-3 control-label">
 				<%= f.label :file, 'Script ' %>
 			</div>
@@ -126,7 +124,7 @@
 	
 
 	<%= f.hidden_field :deliverable , :value => disabled %>
-	<div class="row">
+	<div class="form-group">
 		<div class="col-xs-9">
 			* You must fill in these fields to create a new task.
 		</div>
@@ -134,4 +132,3 @@
 			<%= f.submit disabled ? 'Upload Deliverable' : 'Create Request', :class=>'btn btn-primary' %>
 		</div>
 	</div>
-  </div>
