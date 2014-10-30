@@ -28,7 +28,7 @@ class TasksController < ApplicationController
        format.html {render :edit}
      end
   end
-  
+
   # GET /tasks/rate
   # GET /tasks/rate.json
   def rate
@@ -38,7 +38,16 @@ class TasksController < ApplicationController
       format.json { render json: { :voice_talent_user => vt } , content_type: 'text/json' }
     end
   end
-  
+
+  def status
+    #TODO: Secure this API
+    task = Task.find_by id: params[:id]
+    respond_to do |format|
+      response = task.id unless task.nil?
+      format.json { render json: response, content_type: 'text/json' }
+    end
+  end
+
   def upload(file)
     uploaded_io = file
     File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
@@ -53,7 +62,9 @@ class TasksController < ApplicationController
     @task.events.create(event_type: :ack_cops_notification, feedback: "Sent email to Content Ops for acknowledge")
 
     respond_to do |format|
-      format.html {redirect_to tasks_path, notice: "Voice Request ##{@task.id} was confirmed!"}
+      flash[:notice] = "Voice Request ##{@task.id} was confirmed!"
+      vt = @task.voice_talent_user
+      format.html {redirect_to "/dashboard/#{vt.nickname}/#{vt.digest}" }
     end
   end
 
@@ -61,14 +72,14 @@ class TasksController < ApplicationController
   # POST /tasks.json
   def create
     @task = Task.new(task_params)
-    
+
     # Change status as "not acknowledged"
     @task.notacknowledged!
 
     # TODO: Change the hash to something not predictable as the task.ID
     hash = Digest::MD5.hexdigest(@task.id.to_s)
     @task.events.create([{event_type: :hash_code, feedback: hash }])
-    
+
     file = params[:task][:file]
     self.add_assets(file, false)
 
@@ -81,7 +92,7 @@ class TasksController < ApplicationController
 
         VoicetalentMailer.new_request_email(@task, @user, url).deliver
         @task.events.create([{event_type: :notack_voice_notification, feedback: "Email sent to Voice Talent: #{ @user.email }"}])
-        
+
         ContentMailer.new_request_email(@task, @user).deliver
         @task.events.create([{event_type: :notack_cops_notification, feedback: "Email sent to Content Ops: #{@task.content_ops.email}"}])
 
@@ -102,11 +113,11 @@ class TasksController < ApplicationController
       self.add_assets(file, params[:task][:deliverable])
       @task.events.create([{event_type: :file_uploaded, feedback: "Uploaded file: #{file}"}])
       @task.finished!
-      
+
       if @task.update(task_params)
         ContentMailer.file_uploaded_email(@task).deliver
         @task.events.create([{event_type: :upload_cops_notification, feedback: "Email sent to Content Ops notifing the upload: #{@task.content_ops.email}"}])
-        
+
         format.html { redirect_to @task, notice: 'Task was successfully updated.' }
         format.json { render :show, status: :ok, location: @task }
       else
@@ -128,7 +139,7 @@ class TasksController < ApplicationController
 
     def add_assets(file, deliverable)
         self.upload(file)
-        @task.assets.create([{asset_type: deliverable ? 1 : 0, file: file.original_filename, 
+        @task.assets.create([{asset_type: deliverable ? 1 : 0, file: file.original_filename,
                           title: file.original_filename}])
     end
 

@@ -31,6 +31,8 @@ gem 'draper', '~> 1.3'
 
 gem 'bcrypt'
 
+gem 'jquery-datatables-rails'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 
