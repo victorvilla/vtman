@@ -1,3 +1,4 @@
+require 'digest'
 
 # Drop any Client that exist
 if Client.any?
@@ -16,7 +17,7 @@ if VoiceTalentUser.any?
 end
 
 talents = VoiceTalentUser.create([
-    {first_name: 'Esparta', last_name: 'Palma', email: 'esparta@gmail.com', nickname: 'esparta',
+    {first_name: 'Esparta', last_name: 'Palma', email: 'esparta@gmail.com', nickname: 'esparta', digest: Digest::MD5.hexdigest('esparta'),
     office_phone: '7878787878', full_rate: 175.0, rush_full_rate: 175.0,
     partial_rate: 15.0, rush_partial_rate: 15.0, correction_rate: 0.0, is_veteran: 1},
     {first_name: 'Heather', last_name: 'Capri', email: 'heather_capri@vt.com',
