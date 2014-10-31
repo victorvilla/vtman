@@ -126,6 +126,8 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
+    user = Task.find(params[:id]).voice_talent_user
+
     respond_to do |format|
       file = params[:task][:file]
       self.add_assets(file, params[:task][:deliverable])
@@ -137,7 +139,8 @@ class TasksController < ApplicationController
         @task.events.create([{event_type: :upload_cops_notification, feedback: "Email sent to Content Ops notifing the upload: #{@task.content_ops.email}"}])
 
         flash[:success] = 'Task was successfully updated.'
-        format.html { redirect_to @task }
+        format.html { redirect_to "/dashboard/#{user.nickname}/"\
+                                  "#{user.digest}"  }
         format.json { render :show, status: :ok, location: @task }
       else
         format.html { render :edit }
