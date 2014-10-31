@@ -14,3 +14,16 @@ $ ->
         columnDefs: [{ "orderable": false, "targets": [0,1,2,3,6,7,8] }]
     )
 
+$(".cell-scripts").click ->
+      data = $(this).data()
+      $.get '/api/tasks/status', {id: data.id}, callback, 'json'
+
+callback = (response) ->
+  console.log response
+
+  if response.status in ["notacknowledged", "acknowledged"]
+    uploadicon = 'glyphicon glyphicon-open text-primary'
+    statusicon = 'glyphicon glyphicon-time text-info'
+    $("#up-icon-"+response.id).attr('class', uploadicon )
+    $("#status-icon-"+response.id).attr('class', statusicon)
+

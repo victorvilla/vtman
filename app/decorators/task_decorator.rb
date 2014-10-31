@@ -8,7 +8,7 @@ class TaskDecorator < Draper::Decorator
                          icon: "glyphicon glyphicon-thumbs-up",
                          text: 'Acknowledged'},
           wip: {color: 'text-info',
-                icon: "glyphicon glyphicon-time text-info",
+                icon: "glyphicon glyphicon-time",
                 text: 'Work in Progress'},
           finished: {color: 'text-sucess',
                      icon: "glyphicon glyphicon-ok-circle",
@@ -51,7 +51,7 @@ class TaskDecorator < Draper::Decorator
   end
 
   def upload_icon
-    "glyphicon glyphicon-open #{ object.status =='notacknowledged' ?  'text-muted' : 'text-primary'}"
+    "glyphicon glyphicon-open #{ %w[wip finished].include?(object.status) ? 'text-primary' : 'text-muted' }"
   end
 
     def download_icon

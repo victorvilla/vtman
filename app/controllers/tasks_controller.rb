@@ -42,8 +42,19 @@ class TasksController < ApplicationController
   def status
     #TODO: Secure this API
     task = Task.find_by id: params[:id]
+
+    # If this API is paged then set the Task as WIP if their status is
+    # both, Not-Acknowledged or Acknowledged since we assume
+    # the script file was downloaded
+
+    if !task.nil?
+      old_status = task.status
+      task.wip! if %w[notacknowledged acknowledged].include?(task.status)
+      response = {id: task.id, status: old_status}
+    else
+      response = nil
+    end
     respond_to do |format|
-      response = task.id unless task.nil?
       format.json { render json: response, content_type: 'text/json' }
     end
   end
