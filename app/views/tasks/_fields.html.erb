@@ -1,9 +1,10 @@
 	<% disabled ||= false %>
+	<% if !disabled %>
 	<div class="form-group">
 		<div class="col-xs-3 control-label">
 			<%= f.label :voice_talent_user_id, 'Voice Talent Name *' %>
 		</div>
-		<div class="col-xs-6">		
+		<div class="col-xs-6">
 			<%= f.select :voice_talent_user_id, voice_talent_options, {prompt: '- Select Voice Talent -'}, class:"form-control", disabled: disabled, required: true %>
 		</div>
 	</div>
@@ -15,6 +16,7 @@
 			<%= f.select :content_ops_id, content_ops_options, {prompt: '- Select Voice Request Alies -'}, class:"form-control", disabled: disabled, required: true %>
 		</div>
 	</div>
+	<% end %>
 	<div class="form-group">
 		<div class="col-xs-3 control-label">
 			<%= f.label :client_id, 'Client Name *' %>
@@ -46,7 +48,7 @@
 							<%= f.label :number_chapters, '# of Chapters *'%>
 						</div>
 						<div class="col-xs-4">
-							<%= f.number_field :number_chapters, min: 1, max: 99, class:"form-control", required: true %>
+							<%= f.number_field :number_chapters, min: 1, max: 99, class:"form-control", required: true, disabled: disabled %>
 						</div>
 					</div>
 				</div>
@@ -61,13 +63,13 @@
 			<%= f.text_area :notes, maxlength: 250, cols: 63, rows: 4, class:"form-control", disabled: disabled  %>
 		</div>
 	</div>
-	
+
 	<div class="form-group">
 		<div class="col-xs-3 control-label">
 			<%= f.label :rush, 'Rush *' %>
 		</div>
 		<div class="col-xs-6">
-			<%= f.select :rush, rush_options, { include_blank: false }, class:"form-control", required: true %>
+			<%= f.select :rush, rush_options, { include_blank: false }, class:"form-control", required: true, disabled: disabled %>
 			<small>Please select Yes only if you need within 24 hours.</small>
 		</div>
 	</div>
@@ -78,7 +80,8 @@
 		<div class="col-xs-3">
 			<div class='input-group date'>
 			<!--<%= f.date_field :due_date, min: next_work_date, disabled: disabled, required: true  %>-->
-				<input type="text" id='task_due_date' class="form-control" required >
+				<input type="text" id='task_due_date' class="form-control" required
+				 <%= disabled ? "disabled" : "" %>>
 				<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 			</div>
 		</div>
@@ -93,7 +96,7 @@
 		</div>
 	</div>
 
-	
+
 	<% if !disabled %>
 	    <div class="form-group">
 			<div class="col-xs-3 control-label">
@@ -121,7 +124,7 @@
 		</div>
 	</div>
 	<% end %>
-	
+
 
 	<%= f.hidden_field :deliverable , :value => disabled %>
 	<div class="form-group">
