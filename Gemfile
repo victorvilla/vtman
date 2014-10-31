@@ -30,8 +30,8 @@ gem 'draper', '~> 1.3'
 
 
 gem 'bcrypt'
-
 gem 'jquery-datatables-rails'
+gem 'bootstrap-datepicker-rails'
 
 # Use unicorn as the app server
 # gem 'unicorn'

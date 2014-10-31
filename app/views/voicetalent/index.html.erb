@@ -38,7 +38,7 @@
           <% deliverable = task.deliverable %>
           <%= link_to tag(:span,
                           class:  "#{task.upload_icon}"
-                          ), '#', id: "up-#{task.id} " %>
+                          ), edit_task_path(task), id: "up-#{task.id} " %>
            <% if deliverable %>
 
            <% end %>
