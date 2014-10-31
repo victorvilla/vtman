@@ -66,20 +66,12 @@
 		</div>
 	</div>
 	
-<<<<<<< Updated upstream
 	<div class="form-group">
-=======
-	<div class="row">
->>>>>>> Stashed changes
 		<div class="col-xs-3 control-label">
 			<%= f.label :rush, 'Rush *' %>
 		</div>
 		<div class="col-xs-6">
-<<<<<<< Updated upstream
 			<%= f.select :rush, rush_options, { include_blank: false }, class:"form-control", required: true %>
-=======
-			<%= f.select :rush, rush_options %>
->>>>>>> Stashed changes
 			<small>Please select Yes only if you need within 24 hours.</small>
 		</div>
 	</div>
@@ -87,17 +79,13 @@
 		<div class="col-xs-3 control-label">
 			<%= f.label :due_date, 'Due Date *' %>
 		</div>
-<<<<<<< Updated upstream
 		<div class="col-xs-3">
-			<div class='input-group date'>
+			<div id='date_comp' class='input-group date'>
 			<!--<%= f.date_field :due_date, min: next_work_date, disabled: disabled, required: true  %>-->
-				<input type="text" id='task_due_date' class="form-control" required >
-				<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+				<input type="text" id='date' class="form-control" required >
+				<span class="input-group-addon"><i id='icon_date' class="glyphicon glyphicon-calendar"></i></span>
+				<%= f.hidden_field :due_date %>
 			</div>
-=======
-		<div class="col-xs-2">
-			<%= f.date_field :due_date, min: next_work_date, disabled: disabled  %>
->>>>>>> Stashed changes
 		</div>
 	</div>
 	<div class="form-group">
