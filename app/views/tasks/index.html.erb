@@ -29,10 +29,23 @@
         <td><div class="text-center"><%= task.rush_status %></div></td>
         <td><%= task.rate %></td>
         <td><%= link_to tag(:span,  class: "glyphicon glyphicon-save text-primary"), task.script, :target => "_blank"%></td></td>
-        <td><%= content_tag :div,  tag(:span, id: "up-#{task.id}",
-                                       class: "#{task.download_icon}") %>
-                <%= task.deliverable%></td>
-        <td><%= content_tag(:div, tag(:span, class: "#{task.get_(:icon)} #{task.get_(:color)}") , class: "text-center") %></td>
+        <td>
+          <% deliverable = task.deliverable %>
+          <% if deliverable %>
+          <%= link_to content_tag(:span, deliverable.file, id: "up-#{task.id}",
+                          class: "#{task.download_icon}"),
+                      "uploads/#{deliverable.file}",
+                      :target => "_blank" %>
+          <% else %>
+            <%= tag(:span, id: "up-#{task.id}",
+                          class: "#{task.download_icon}") %>
+          <% end %>
+        </td>
+        <td>
+          <%= content_tag(:div, tag(:span,
+                                    class: "#{task.get_(:icon)} "\
+                                           "#{task.get_(:color)}") ,
+                          class: "text-center") %></td>
       </tr>
     <% end %>
   </tbody>

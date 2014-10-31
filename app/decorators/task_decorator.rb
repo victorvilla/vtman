@@ -10,7 +10,7 @@ class TaskDecorator < Draper::Decorator
           wip: {color: 'text-info',
                 icon: "glyphicon glyphicon-time",
                 text: 'Work in Progress'},
-          finished: {color: 'text-sucess',
+          finished: {color: 'text-success',
                      icon: "glyphicon glyphicon-ok-circle",
                      text: 'Finished'},
           done: {color: '', text: '', icon: ''},
@@ -27,13 +27,12 @@ class TaskDecorator < Draper::Decorator
   end
 
   def get_file(property)
-    s = object.send(property).last
-    return nil if s.nil?
-    "/uploads/#{s.file}"
+    return object.send(property).last
   end
 
   def script
-    self.get_file(:scripts)
+    s = self.get_file(:scripts)
+    return "/uploads/#{s.file}" unless s.nil?
   end
 
   def deliverable
@@ -46,12 +45,16 @@ class TaskDecorator < Draper::Decorator
     end
   end
 
+  def can_upload?
+    %w[wip finished].include?(object.status)
+  end
+
   def get_(property)
      @@info[object.status.to_sym][property]
   end
 
   def upload_icon
-    "glyphicon glyphicon-open #{ %w[wip finished].include?(object.status) ? 'text-primary' : 'text-muted' }"
+    "glyphicon glyphicon-open #{ self.can_upload? ? 'text-primary' : 'text-muted' }"
   end
 
     def download_icon

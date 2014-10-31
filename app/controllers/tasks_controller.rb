@@ -73,7 +73,7 @@ class TasksController < ApplicationController
     @task.events.create(event_type: :ack_cops_notification, feedback: "Sent email to Content Ops for acknowledge")
 
     respond_to do |format|
-      flash[:info] = "Voice Request ##{@task.id} was confirmed!"
+      flash[:success] = "Voice Request ##{@task.id} was confirmed!"
       vt = @task.voice_talent_user
       format.html {redirect_to "/dashboard/#{vt.nickname}/#{vt.digest}" }
     end
