@@ -12,7 +12,7 @@ class TaskDecorator < Draper::Decorator
                 text: 'Work in Progress'},
           finished: {color: 'text-success',
                      icon: "glyphicon glyphicon-ok-circle",
-                     text: 'Finished'},
+                     text: 'File Uploaded'},
           done: {color: '', text: '', icon: ''},
           overdue: {color: 'text-danger',
                     icon: 'glyphicon glyphicon-exclamation-sign',
@@ -51,6 +51,13 @@ class TaskDecorator < Draper::Decorator
 
   def get_(property)
      @@info[object.status.to_sym][property]
+  end
+
+  def get_type
+     {full: "Full",
+      partial: "Partial",
+      correction: "Correction"
+        }[object.type_script.to_sym]
   end
 
   def upload_icon
