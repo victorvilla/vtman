@@ -69,14 +69,19 @@ class TasksController < ApplicationController
 
   def confirm
     # Set the new status to the task
-    @task.acknowledged!
-    ContentMailer.acknowledged_email(@task).deliver
-    @task.events.create(event_type: :ack_cops_notification, feedback: "Sent email to Content Ops for acknowledge")
+    if @task
+      @task.acknowledged!
+      ContentMailer.acknowledged_email(@task).deliver
+      @task.events.create(event_type: :ack_cops_notification, feedback: "Sent email to Content Ops for acknowledge")
 
-    respond_to do |format|
-      flash[:success] = "Voice Request ##{@task.id} was confirmed!"
-      vt = @task.voice_talent_user
-      format.html {redirect_to "/dashboard/#{vt.nickname}/#{vt.digest}" }
+      respond_to do |format|
+        flash[:success] = "Voice Request ##{@task.id} was confirmed!"
+        vt = @task.voice_talent_user
+        format.html {redirect_to "/dashboard/#{vt.nickname}/#{vt.digest}" }
+      end
+    else
+      flash[:danger] = "Confirmation code no longer valid"
+      redirect_to root_path
     end
   end
 
@@ -162,10 +167,10 @@ class TasksController < ApplicationController
     def next_work_date
       next_date = Date.today + 1
       if next_date.wday == 6 then
-        next_date + 2 
-      elsif next_date.wday == 0 then 
-        next_date + 1 
-      else 
+        next_date + 2
+      elsif next_date.wday == 0 then
+        next_date + 1
+      else
         next_date
       end
     end
