@@ -4,7 +4,7 @@
 		<div class="col-xs-3 control-label">
 			<%= f.label :voice_talent_user_id, 'Voice Talent Name *' %>
 		</div>
-		<div class="col-xs-6">		
+		<div class="col-xs-6">
 			<%= f.select :voice_talent_user_id, voice_talent_options, {prompt: '- Select Voice Talent -'}, class:"form-control", disabled: disabled, required: true %>
 		</div>
 	</div>
@@ -65,13 +65,13 @@
 			<%= f.text_area :notes, maxlength: 250, cols: 63, rows: 4, class:"form-control", disabled: disabled  %>
 		</div>
 	</div>
-	
+	<% if !disabled %>
 	<div class="form-group">
 		<div class="col-xs-3 control-label">
 			<%= f.label :rush, 'Rush *' %>
 		</div>
 		<div class="col-xs-6">
-			<%= f.select :rush, rush_options, { include_blank: false }, class:"form-control", required: true %>
+			<%= f.select :rush, rush_options, { include_blank: false }, class:"form-control", required: true, disabled: disabled %>
 			<small>Please select Yes only if you need within 24 hours.</small>
 		</div>
 	</div>
@@ -82,12 +82,13 @@
 		<div class="col-xs-3">
 			<div id='date_comp' class='input-group date'>
 			<!--<%= f.date_field :due_date, min: next_work_date, disabled: disabled, required: true  %>-->
-				<input type="text" id='date' class="form-control" required >
+				<input type="text" id='date' class="form-control" required disabled: disabled>
 				<span class="input-group-addon"><i id='icon_date' class="glyphicon glyphicon-calendar"></i></span>
 				<%= f.hidden_field :due_date %>
 			</div>
 		</div>
 	</div>
+
 	<div class="form-group">
 		<div class="col-xs-3 control-label">
 			<%= f.label :rate , 'Rate' %>
@@ -98,7 +99,7 @@
 		</div>
 	</div>
 
-	
+	<% end %>
 	<% if !disabled %>
 	    <div class="form-group">
 			<div class="col-xs-3 control-label">
@@ -109,14 +110,6 @@
 			</div>
 	    </div>
 	<% else %>
-	   <div class="form-group">
-			<div class="col-xs-3 control-label">
-				<%= f.label :file, 'Script ' %>
-			</div>
-			<div class="col-xs-6">
-				<%= task.scripts.last.file %>
-			</div>
-		</div>
 		<div class="form-group">
 		<div class="col-xs-3 control-label">
 			<%= f.label :file, 'Deliverable *' %>
@@ -126,7 +119,7 @@
 		</div>
 	</div>
 	<% end %>
-	
+
 
 	<%= f.hidden_field :deliverable , :value => disabled %>
 	<div class="form-group">
