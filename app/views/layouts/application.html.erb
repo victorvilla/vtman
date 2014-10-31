@@ -29,16 +29,15 @@
 <div class='alert alert-info fade in' data-alert='alert'>
 	<h3>
 		<strong>
-			Voice Talen Manager, add a New Task, or don't.
+			Voice Talent Manager, Create New Task.
 		</strong>
 	</h3>
-<p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.. </p>
 </div>
       <% flash.each do |message_type, message| %>
         <div class="alert alert-<%= message_type %>"><%= message %>
           <a class="close" data-dismiss='alert' href="#">×</a>
         </div>
-        
+
       <% end %>
 <%= yield %>
 </div>
