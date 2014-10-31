@@ -62,7 +62,7 @@ class TasksController < ApplicationController
     @task.events.create(event_type: :ack_cops_notification, feedback: "Sent email to Content Ops for acknowledge")
 
     respond_to do |format|
-      flash[:notice] = "Voice Request ##{@task.id} was confirmed!"
+      flash[:info] = "Voice Request ##{@task.id} was confirmed!"
       vt = @task.voice_talent_user
       format.html {redirect_to "/dashboard/#{vt.nickname}/#{vt.digest}" }
     end
@@ -96,7 +96,8 @@ class TasksController < ApplicationController
         ContentMailer.new_request_email(@task, @user).deliver
         @task.events.create([{event_type: :notack_cops_notification, feedback: "Email sent to Content Ops: #{@task.content_ops.email}"}])
 
-        format.html { redirect_to tasks_path, notice: 'Task was successfully created.' }
+        flash[:success] = 'Task was successfully created.'
+        format.html { redirect_to tasks_path }
         format.json { render :show, status: :created, location: @task }
       else
         format.html { render :new }
@@ -118,7 +119,8 @@ class TasksController < ApplicationController
         ContentMailer.file_uploaded_email(@task).deliver
         @task.events.create([{event_type: :upload_cops_notification, feedback: "Email sent to Content Ops notifing the upload: #{@task.content_ops.email}"}])
 
-        format.html { redirect_to @task, notice: 'Task was successfully updated.' }
+        flash[:success] = 'Task was successfully updated.'
+        format.html { redirect_to @task }
         format.json { render :show, status: :ok, location: @task }
       else
         format.html { render :edit }

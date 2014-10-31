@@ -1,5 +1,7 @@
 <% if @user.nil? %>
-  <h1> Dashboard not found </h1>
+  <div class='alert alert-danger'>
+    <h1> Dashboard not found </h1>
+  </div>
 <% else %>
 <h1>Voice Talent Dashboard for <%= @user.nickname %></h1>
 
@@ -53,7 +55,7 @@
     <% end %>
   </tbody>
 </table>
-<%= image_tag "ribbon_vt.png", class: 'img-responsive center-block' %>
+<%= image_tag "ribbon_admin.png", class: 'img-responsive center-block' %>
 
 <% end %>
 <br>
