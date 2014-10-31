@@ -35,7 +35,8 @@ class TasksController < ApplicationController
     respond_to do |format|
       voice_talent_user = params[:voice_talent_user_id]
       vt = VoiceTalentUser.actives.find(voice_talent_user)
-      format.json { render json: { :voice_talent_user => vt } , content_type: 'text/json' }
+      nwd = next_work_date().strftime("%m-%d-%Y")
+      format.json { render json: { :voice_talent_user => vt, :next_work_date => nwd } , content_type: 'text/json' }
     end
   end
 
@@ -158,6 +159,16 @@ class TasksController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def next_work_date
+      next_date = Date.today + 1
+      if next_date.wday == 6 then
+        next_date + 2 
+      elsif next_date.wday == 0 then 
+        next_date + 1 
+      else 
+        next_date
+      end
+    end
 
     def get_hash
       # Get the Task where status is notacknowledged and the event is the given parameter

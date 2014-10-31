@@ -11,29 +11,22 @@ $ ->
        $('#task_rush').removeAttr("disabled")
        return
 
-    d = new Date()
-    d.setDate(d.getDate() + 1)
-    format = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-    $('#task_due_date').val(format)  
+    #d = new Date()
+    #d.setDate(d.getDate() + 1)
+    #format =  (d.getMonth() + 1) + '-' + d.getDate() + '-' + d.getFullYear()
+    #$('#date').val('11-03-2014')
+    #$('.input-group.date').datepicker('setDate', '11-06-2014')
+    #$('.input-group.date').datepicker('refresh')
+    #$('#task_due_date').val(format)
  
     callback = (response) -> 
       console.log "is_veteran: " + response.voice_talent_user.is_veteran
       vt = response.voice_talent_user
+      nwd = response.next_work_date
+      console.log 'Date: ' + nwd 
       console.log 'correction_rate: ' + vt.correction_rate + '. rush_full_rate: ' + vt.rush_full_rate + '. rush_partial_rate: ' + vt.rush_partial_rate
-      if vt.is_veteran == false
-        $('#task_rush').val('true')
-        $('#task_rush').attr("disabled", "disabled")
-        $('#task_due_date').attr("disabled", "disabled")
-      else
-        $('#task_rush').removeAttr("disabled")
-        $('#task_due_date').removeAttr("disabled")
-        type_script_id = $('#task_type_script option:selected').val()
-        if type_script_id == 'correction'
-           $('#task_rush').val('true')
-           $('#task_rush').attr("disabled", "disabled")
-           $('#task_due_date').attr("disabled", "disabled")
-        console.log 'full_rate: ' + vt.full_rate + '. partial_rate: ' + vt.partial_rate
 
+      validate_components(vt, nwd)
       validate_rate(vt)
       
     $.get '/tasks/new/rate/', {voice_talent_user_id}, callback, 'json'
@@ -49,28 +42,28 @@ $ ->
     if type_script_id == 'partial'
       $('.chapters').show()
       $('#task_rush').removeAttr("disabled")
-      $('#task_due_date').removeAttr("disabled")
     else if type_script_id == 'full'
       $('.chapters').hide()
       $('#task_rush').removeAttr("disabled")
-      $('#task_due_date').removeAttr("disabled")
     else if type_script_id == 'correction'
       $('.chapters').hide()
       $('#task_rush').val('true')
       $('#task_rush').attr("disabled", "disabled")
-      d = new Date()
-      d.setDate(d.getDate() + 1)
-      format = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
-      $('#task_due_date').val(format)
-      $('#task_due_date').attr("disabled", "disabled")
+      #d = new Date()
+      #d.setDate(d.getDate() + 1)
+      #format = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate()
+      #$('#date').val(format)
     
     voice_talent_user_id = $('#task_voice_talent_user_id').find(":selected").val()
     if voice_talent_user_id == ''
       return
     callback = (response) -> 
       vt = response.voice_talent_user
+      nwd = response.next_work_date
+      console.log 'Date: ' + nwd 
       console.log 'correction_rate: ' + vt.correction_rate + '. rush_full_rate: ' + vt.rush_full_rate + '. rush_partial_rate: ' + vt.rush_partial_rate + '. full_rate: ' + vt.full_rate + '. partial_rate: ' + vt.partial_rate
 
+      validate_components(vt, nwd)
       validate_rate(vt)
       
     $.get '/tasks/new/rate/', {voice_talent_user_id}, callback, 'json'
@@ -105,12 +98,35 @@ $ ->
       return
     callback = (response) -> 
       vt = response.voice_talent_user
+      nwd = response.next_work_date
+      console.log 'Date: ' + nwd  
       console.log 'correction_rate: ' + vt.correction_rate + '. rush_full_rate: ' + vt.rush_full_rate + '. rush_partial_rate: ' + vt.rush_partial_rate + '. full_rate: ' + vt.full_rate + '. partial_rate: ' + vt.partial_rate
 
       validate_rate(vt)
       
     $.get '/tasks/new/rate/', {voice_talent_user_id}, callback, 'json'
 
+validate_components = (vt, nwd ) ->
+      if vt.is_veteran == false
+        $('#task_rush').val('true')
+        $('#task_rush').attr("disabled", "disabled")
+        $('#date').attr("disabled", "disabled")
+        $('.input-group.date').datepicker('setDate', nwd)
+        $('.input-group.date').datepicker('remove')
+      else
+        $('#task_rush').removeAttr("disabled")
+        $('#date').removeAttr("disabled")
+        create_date_picker()
+        $('.input-group.date').datepicker('setDate', nwd)
+        type_script_id = $('#task_type_script option:selected').val()
+        if type_script_id == 'correction'
+           $('#task_rush').val('true')
+           $('#task_rush').attr("disabled", "disabled")
+           $('#date').attr("disabled", "disabled")
+           $('.input-group.date').datepicker('remove')
+        console.log 'full_rate: ' + vt.full_rate + '. partial_rate: ' + vt.partial_rate
+		
+		
 validate_rate = (vt) ->
       voice_talent_user_id = $('#task_voice_talent_user_id').find(":selected").val()
       type_script_id = $('#task_type_script option:selected').val()
@@ -143,20 +159,20 @@ validate_rate = (vt) ->
       console.log '. total: ' + $('#task_rate').val()
       $('.total').html('$ ' + total)
       #$('.total').html("<%= #{ number_to_currency @task.rate } %>")
-	  
+
+create_date_picker = () ->
+      $('.input-group.date').datepicker({
+        format: "mm-dd-yyyy",
+        orientation: "top left"
+        startDate: '+1d',
+        daysOfWeekDisabled: "0,6",
+        todayHighlight: true,
+        autoclose: true
+      })
+  
 jQuery ->
   $(document).ready ->
-    #$('#task_voice_talent_user_id').width(400).resize(true)
-    #$('#task_content_ops_id').width(400).resize(true)
-    #$('#task_client_id').width(400).resize(true)
     $('#task_type_script').width(190).resize(true)
     $('#task_rush').width(60).resize(true)
     console.log '. Contiene?: ' + $('#task_file')
-    $('.input-group.date').datepicker({
-      format: "mm-dd-yyyy",
-      orientation: "top left"
-      startDate: "10/31/2014",
-      daysOfWeekDisabled: "0,6",
-      todayHighlight: true,
-      autoclose: true
-    })
+    create_date_picker()
