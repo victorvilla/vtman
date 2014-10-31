@@ -1,5 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import 'dataTables/bootstrap/3/jquery.dataTables.bootstrap';
 @import "bootstrap-datepicker3";
 
 body {
@@ -26,3 +27,4 @@ padding: 0 2px;
 .footer-links li:first-child {
 padding-left: 0;
 }
+

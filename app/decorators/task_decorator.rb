@@ -1,8 +1,25 @@
 class TaskDecorator < Draper::Decorator
   delegate_all
 
+@@info = {notacknowledged: {color: "text-normal",
+                             icon: "glyphicon glyphicon-remove-circle",
+                             text:  "Not Acknowledged"},
+          acknowledged: {color: 'text-primary',
+                         icon: "glyphicon glyphicon-thumbs-up",
+                         text: 'Acknowledged'},
+          wip: {color: 'text-info',
+                icon: "glyphicon glyphicon-time text-info",
+                text: 'Work in Progress'},
+          finished: {color: 'text-sucess',
+                     icon: "glyphicon glyphicon-ok-circle",
+                     text: 'Finished'},
+          done: {color: '', text: '', icon: ''},
+          overdue: {color: 'text-danger',
+                    icon: 'glyphicon glyphicon-exclamation-sign',
+                    text: 'Overdue'}}
+
   def mdy
-    object.due_date.strftime("%m- %d - %Y") unless object.due_date.nil?
+    object.due_date.strftime("%m-%d-%Y") unless object.due_date.nil?
   end
 
   def rate
@@ -11,8 +28,8 @@ class TaskDecorator < Draper::Decorator
 
   def get_file(property)
     s = object.send(property).last
-    return "" if s.nil?
-    h.link_to(s.file)
+    return nil if s.nil?
+    "/uploads/#{s.file}"
   end
 
   def script
@@ -29,14 +46,15 @@ class TaskDecorator < Draper::Decorator
     end
   end
 
-  def show_status
-    icon = { notacknowledged: "glyphicon-remove-circle",
-           acknowledged: "glyphicon-thumbs-up",
-           wip: "glyphicon-time",
-           finished: "glyphicon-ok-circle",
-           done: "",
-           overdue: "glyphicon-exclamation-sign"}
+  def get_(property)
+     @@info[object.status.to_sym][property]
+  end
 
-    h.tag(:span, class: "glyphicon #{icon[object.status.to_sym]}")
+  def upload_icon
+    "glyphicon glyphicon-open #{ object.status =='notacknowledged' ?  'text-muted' : 'text-primary'}"
+  end
+
+    def download_icon
+    "glyphicon glyphicon-save #{ object.status =='notacknowledged' ?  'text-muted' : 'text-primary'}"
   end
 end

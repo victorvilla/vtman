@@ -1,3 +1,4 @@
+require 'digest'
 
 # Drop any Client that exist
 if Client.any?
@@ -16,6 +17,9 @@ if VoiceTalentUser.any?
 end
 
 talents = VoiceTalentUser.create([
+    {first_name: 'Esparta', last_name: 'Palma', email: 'esparta@gmail.com', nickname: 'esparta', digest: Digest::MD5.hexdigest('esparta'),
+    office_phone: '7878787878', full_rate: 175.0, rush_full_rate: 175.0,
+    partial_rate: 15.0, rush_partial_rate: 15.0, correction_rate: 0.0, is_veteran: 1},
     {first_name: 'Heather', last_name: 'Capri', email: 'heather_capri@vt.com',
     office_phone: '7878787878', full_rate: 175.0, rush_full_rate: 175.0,
     partial_rate: 15.0, rush_partial_rate: 15.0, correction_rate: 0.0, is_veteran: 1},
@@ -83,6 +87,9 @@ gs = GuidesparkUser.create([
   {first_name: 'Victor', last_name: 'Villa', email: 'vvilla@guidespark.com',
   profile: 1, office_address: '1350 Willow Road Suite 201', office_phone: '1231231231',
   password: "Victor", password_confirmation: "Victor"},
+  {first_name: 'E', last_name: 'Palma', email: 'epmwgs@gmail.com',
+  profile: 1, office_address: '1350 Willow Road Suite 201', office_phone: '1231231231',
+  password: "Esparta", password_confirmation: "Esparta"},
   {first_name: 'James', last_name: 'Otto', email: 'james_otto@gs.com',
   profile: 2, office_address: '1350 Willow Road Suite 201', office_phone: '1231231231',
   password: "James", password_confirmation: "James"},
@@ -92,7 +99,7 @@ gs = GuidesparkUser.create([
   {first_name: 'Jim', last_name: 'Ruiz', email: 'jim_ruiz@gs.com',
    profile: 1, office_address: '1350 Willow Road Suite 201', office_phone: '7897897897',
    password: "Jim", password_confirmation: "Jim"},
-  {first_name: 'Mayra', last_name: 'Jhonson', email: 'mayra_jhonson@gs.com',
+  {first_name: 'Mayra', last_name: 'Jhonson', email: 'mayra@gs.com',
   profile: 2, office_address: '1080 Hamilton Ave', office_phone: '0240240240',
   password: "Mayra", password_confirmation: "Mayra"},
   {first_name: 'Diego', last_name: 'Moore', email: 'diego_moore@gs.com',
@@ -107,7 +114,7 @@ if Task.any?
 end
 
 
-tasks = Task.create!([{video_title: "Lorem ipsum dolor sit amet", type_script: Task.type_scripts[:full],
+Task.create!([{video_title: "Lorem ipsum dolor sit amet", type_script: Task.type_scripts[:full],
   number_chapters: 1, notes: "Maecenas consectetur velit ac metus congue", rush: false,
   rate: talents.to_a[0].full_rate, due_date: "2014-10-13", status: Task.statuses[:overdue],
   voice_talent_user_id: talents.to_a[0].id, writer_id: gs.to_a[0].id, content_ops_id: gs.to_a[1].id,
@@ -134,7 +141,3 @@ tasks = Task.create!([{video_title: "Lorem ipsum dolor sit amet", type_script: T
   client_id: clients.to_a[3].id }])
 
 
-t = tasks.first
-t.assets.create([{title: "Script for Amazon", file: "ama01.pdf"},
-                      {title: "Voice for Amazon1", file: "voice.wav", asset_type: 1},
-                       {title: "Voice for Amazon2", file: "voice2.wav", asset_type: 1}])

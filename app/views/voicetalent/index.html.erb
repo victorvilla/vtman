@@ -1,0 +1,59 @@
+<% if @user.nil? %>
+  <h1> Dashboard not found </h1>
+<% else %>
+<h1>Voice Talent Dashboard for <%= @user.nickname %></h1>
+
+<table id="tasks" class="table table-bordered table-striped ">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Client</th>
+      <th>Video Title</th>
+      <th>Notes</th>
+      <th>Due date</th>
+      <th>Rush</th>
+      <th>Rate</th>
+      <th>Script</th>
+      <th>Deliverable</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tasks.each_with_index do |task, index | %>
+      <tr>
+        <td class="col-md-1"><%= index + 1 %></td>
+        <td class="col-md-2"><%= task.client.name %></td>
+        <td class="col-md-4"><%= task.video_title %></td>
+        <td class="col-md-3"><%= task.notes %></td>
+        <td class="col-md-2"><%= task.mdy %></td>
+        <td class="col-md-1"><%= content_tag :div, task.rush_status, class: "text-center" %></td>
+        <td><%= task.rate %></td>
+        <td><%= link_to tag(:span,
+                            class: "glyphicon glyphicon-save text-primary"),
+                        task.script, :class => "cell-scripts",
+                        :data => {id: task.id}, :target => "_blank"%></td>
+
+        <td>
+          <% deliverable = task.deliverable %>
+          <%= link_to tag(:span,
+                          class:  "#{task.upload_icon}"
+                          ), edit_task_path(task), id: "up-#{task.id} " %>
+           <% if deliverable %>
+
+           <% end %>
+        </td>
+        <td class="col-md-2">
+          <%= content_tag :div, tag(:span,
+                                    class: "#{task.get_(:icon)}
+                                            #{task.get_(:color)}") ,
+                          class: "text-center" %></td>
+          </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= image_tag "ribbon_vt.png", class: 'img-responsive center-block' %>
+
+<% end %>
+<br>
