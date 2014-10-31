@@ -106,6 +106,11 @@ $ ->
       
     $.get '/tasks/new/rate/', {voice_talent_user_id}, callback, 'json'
 
+$ ->
+  $(':submit').click ->
+    $('#task_due_date').val($('.input-group.date').datepicker('getDate'))
+    #console.log 'date: ' + $('#date').val() + '. Picker: ' + $('.input-group.date').datepicker('getDate') + '. task_due_date : ' + $('#task_due_date').val()
+
 validate_components = (vt, nwd ) ->
       if vt.is_veteran == false
         $('#task_rush').val('true')
@@ -137,7 +142,7 @@ validate_rate = (vt) ->
         return
       console.log "type_script_id : " + type_script_id + ". rush : " + rush + ". num_chapters : " + num_chapters
 	  
-      total = 0.0
+      total = 0
       if type_script_id == 'partial'
         total = vt.partial_rate
         console.log '. partial_rate: ' + vt.partial_rate + ' (Default)'
@@ -163,6 +168,7 @@ validate_rate = (vt) ->
 create_date_picker = () ->
       $('.input-group.date').datepicker({
         format: "mm-dd-yyyy",
+        forceParse: false,
         orientation: "top left"
         startDate: '+1d',
         daysOfWeekDisabled: "0,6",
@@ -172,7 +178,7 @@ create_date_picker = () ->
   
 jQuery ->
   $(document).ready ->
-    $('#task_type_script').width(190).resize(true)
+    #$('#task_type_script').width(190).resize(true)
     $('#task_rush').width(60).resize(true)
     console.log '. Contiene?: ' + $('#task_file')
     create_date_picker()
