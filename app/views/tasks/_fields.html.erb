@@ -33,6 +33,7 @@
 			<%= f.text_field :video_title, maxlength:100, class:"form-control", disabled: disabled, required: true %>
 		</div>
 	</div>
+	<% if !disabled %>
 	<div class="form-group">
 		<div class="col-xs-3 control-label">
 			<%= f.label :type_script, "Type of script *" %>
@@ -55,6 +56,7 @@
 			</div>
 		</div>
 	</div>
+	<% end %>
 	<div class="form-group">
 		<div class="col-xs-3 control-label">
 			<%= f.label :notes, "Notes" %>
@@ -64,6 +66,7 @@
 		</div>
 	</div>
 
+	<% if !disabled %>
 	<div class="form-group">
 		<div class="col-xs-3 control-label">
 			<%= f.label :rush, 'Rush *' %>
@@ -78,14 +81,16 @@
 			<%= f.label :due_date, 'Due Date *' %>
 		</div>
 		<div class="col-xs-3">
-			<div class='input-group date'>
+			<div id='date_comp' class='input-group date'>
 			<!--<%= f.date_field :due_date, min: next_work_date, disabled: disabled, required: true  %>-->
 				<input type="text" id='task_due_date' class="form-control" required
 				 <%= disabled ? "disabled" : "" %>>
 				<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+				<%= f.hidden_field :due_date %>
 			</div>
 		</div>
 	</div>
+
 	<div class="form-group">
 		<div class="col-xs-3 control-label">
 			<%= f.label :rate , 'Rate' %>
@@ -96,7 +101,7 @@
 		</div>
 	</div>
 
-
+	<% end %>
 	<% if !disabled %>
 	    <div class="form-group">
 			<div class="col-xs-3 control-label">
@@ -107,14 +112,6 @@
 			</div>
 	    </div>
 	<% else %>
-	   <div class="form-group">
-			<div class="col-xs-3 control-label">
-				<%= f.label :file, 'Script ' %>
-			</div>
-			<div class="col-xs-6">
-				<%= task.scripts.last.file %>
-			</div>
-		</div>
 		<div class="form-group">
 		<div class="col-xs-3 control-label">
 			<%= f.label :file, 'Deliverable *' %>

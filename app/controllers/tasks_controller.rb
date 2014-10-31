@@ -35,7 +35,8 @@ class TasksController < ApplicationController
     respond_to do |format|
       voice_talent_user = params[:voice_talent_user_id]
       vt = VoiceTalentUser.actives.find(voice_talent_user)
-      format.json { render json: { :voice_talent_user => vt } , content_type: 'text/json' }
+      nwd = next_work_date().strftime("%m-%d-%Y")
+      format.json { render json: { :voice_talent_user => vt, :next_work_date => nwd } , content_type: 'text/json' }
     end
   end
 
@@ -68,14 +69,19 @@ class TasksController < ApplicationController
 
   def confirm
     # Set the new status to the task
-    @task.acknowledged!
-    ContentMailer.acknowledged_email(@task).deliver
-    @task.events.create(event_type: :ack_cops_notification, feedback: "Sent email to Content Ops for acknowledge")
+    if @task
+      @task.acknowledged!
+      ContentMailer.acknowledged_email(@task).deliver
+      @task.events.create(event_type: :ack_cops_notification, feedback: "Sent email to Content Ops for acknowledge")
 
-    respond_to do |format|
-      flash[:success] = "Voice Request ##{@task.id} was confirmed!"
-      vt = @task.voice_talent_user
-      format.html {redirect_to "/dashboard/#{vt.nickname}/#{vt.digest}" }
+      respond_to do |format|
+        flash[:success] = "Voice Request ##{@task.id} was confirmed!"
+        vt = @task.voice_talent_user
+        format.html {redirect_to "/dashboard/#{vt.nickname}/#{vt.digest}" }
+      end
+    else
+      flash[:danger] = "Confirmation code no longer valid"
+      redirect_to root_path
     end
   end
 
@@ -120,6 +126,8 @@ class TasksController < ApplicationController
   # PATCH/PUT /tasks/1
   # PATCH/PUT /tasks/1.json
   def update
+    user = Task.find(params[:id]).voice_talent_user
+
     respond_to do |format|
       file = params[:task][:file]
       self.add_assets(file, params[:task][:deliverable])
@@ -131,7 +139,8 @@ class TasksController < ApplicationController
         @task.events.create([{event_type: :upload_cops_notification, feedback: "Email sent to Content Ops notifing the upload: #{@task.content_ops.email}"}])
 
         flash[:success] = 'Task was successfully updated.'
-        format.html { redirect_to @task }
+        format.html { redirect_to "/dashboard/#{user.nickname}/"\
+                                  "#{user.digest}"  }
         format.json { render :show, status: :ok, location: @task }
       else
         format.html { render :edit }
@@ -158,6 +167,16 @@ class TasksController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def next_work_date
+      next_date = Date.today + 1
+      if next_date.wday == 6 then
+        next_date + 2
+      elsif next_date.wday == 0 then
+        next_date + 1
+      else
+        next_date
+      end
+    end
 
     def get_hash
       # Get the Task where status is notacknowledged and the event is the given parameter

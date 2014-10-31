@@ -12,14 +12,15 @@ class TaskDecorator < Draper::Decorator
                 text: 'Work in Progress'},
           finished: {color: 'text-success',
                      icon: "glyphicon glyphicon-ok-circle",
-                     text: 'Finished'},
+                     text: 'File Uploaded'},
           done: {color: '', text: '', icon: ''},
           overdue: {color: 'text-danger',
                     icon: 'glyphicon glyphicon-exclamation-sign',
                     text: 'Overdue'}}
 
   def mdy
-    object.due_date.strftime("%m-%d-%Y") unless object.due_date.nil?
+    # FIX THIS. This is related to the Date issue.
+    object.due_date.strftime("%d-%m-%Y") unless object.due_date.nil?
   end
 
   def rate
@@ -51,6 +52,13 @@ class TaskDecorator < Draper::Decorator
 
   def get_(property)
      @@info[object.status.to_sym][property]
+  end
+
+  def get_type
+     {full: "Full",
+      partial: "Partial",
+      correction: "Correction"
+        }[object.type_script.to_sym]
   end
 
   def upload_icon
