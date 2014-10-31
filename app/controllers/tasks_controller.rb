@@ -148,9 +148,10 @@ class TasksController < ApplicationController
 
     def get_hash
       # Get the Task where status is notacknowledged and the event is the given parameter
-      @task = Task.joins(:events).where(status: Task.statuses[:notacknowledged],
-                                        events:{ event_type: :hash_code,
-                                                 feedback: params[:hash] }).take or not_found('Confirmation not found')
+      @task = Task.joins(:events).\
+                     where(status: Task.statuses[:notacknowledged],
+                           events:{event_type: Event.event_types[:hash_code],
+                                   feedback: params[:hash] }).take
     end
 
     def logged_in_user
