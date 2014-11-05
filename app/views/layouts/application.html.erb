@@ -29,7 +29,11 @@
 <div class='alert alert-info fade in' data-alert='alert'>
 	<h3>
 		<strong>
-			Voice Talent Manager, Create New Task.
+      <% if @user.nil? %>
+          Voice Talent Manager, Create New Task.
+      <% else %>
+          Welcome, <%= "#{@user.first_name} #{@user.last_name}" %>
+      <% end %>
 		</strong>
 	</h3>
 </div>
