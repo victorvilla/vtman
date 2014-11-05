@@ -110,7 +110,7 @@ class TasksController < ApplicationController
       if @task.save
         @task.events.create([{event_type: :task_created, feedback: "Voice request created"}])
 
-        url = "http://localhost:10534/confirm/#{hash}"
+        url = request.protocol + request.host + ':' + request.port.to_s + "/confirm/#{hash}"
         @user = @task.voice_talent_user
 
         VoicetalentMailer.new_request_email(@task, @user, url).deliver
