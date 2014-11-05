@@ -3,7 +3,7 @@ require 'digest'
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :get_hash, only: [:confirm]
-  before_action :logged_in_user, only: [:index, :new]
+  before_action :logged_in_user, only: [:index, :new, :create]
   # GET /tasks
   # GET /tasks.json
   def index
@@ -93,6 +93,12 @@ class TasksController < ApplicationController
     # Change status as "not acknowledged"
     @task.notacknowledged!
 
+    # TODO: Manage as error when Voice Request Alias is not found
+    @task.content_ops = get_voice_request_alias()
+
+    # Add writer to the task which is on session.
+    @task.writer = current_user
+    
     # TODO: Change the hash to something not predictable as the task.ID
     hash = Digest::MD5.hexdigest(@task.id.to_s)
     @task.events.create([{event_type: :hash_code, feedback: hash }])
@@ -190,6 +196,14 @@ class TasksController < ApplicationController
       unless logged_in?
         flash[:danger] = "Please log in."
         redirect_to login_url
+      end
+    end
+    
+    def get_voice_request_alias
+      yaml = YAML.load_file('config/properties.yml')
+      req_alias = yaml.fetch('voice_request')['alias']
+      if !req_alias.nil?
+        voice_request_user = GuidesparkUser.active_voice_request_alias.find_by first_name: req_alias
       end
     end
 

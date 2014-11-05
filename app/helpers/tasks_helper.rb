@@ -13,7 +13,7 @@ module TasksHelper
   end
   
   def content_ops_options
-    GuidesparkUser.active_content_ops.collect { |u| [u.first_name.titleize + ' ' + u.last_name.titleize, u.id]}
+    GuidesparkUser.active_voice_request_alias.collect { |u| [u.first_name.titleize + ' ' + u.last_name.titleize, u.id]}
   end
   
   def next_work_date
