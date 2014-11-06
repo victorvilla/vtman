@@ -32,14 +32,18 @@
 
         <td>
           <% deliverable = task.deliverable %>
-          <%= link_to tag(:span,
-                          class:  "#{task.upload_icon}",
-                          id: "up-icon-#{task.id}"
-                          ), edit_task_path(task), id: "up-#{task.id}" %>
+          
            <% if deliverable %>
-
+      			<%= link_to content_tag(:span, deliverable.file,
+					class:  "#{task.upload_icon}",
+               		id: "up-icon-#{task.id}"), edit_task_path(task), id: "up-#{task.id}" %>
+		   <% else %>
+           		<%= link_to tag(:span,
+					class:  "#{task.upload_icon}",
+                    id: "up-icon-#{task.id}"), edit_task_path(task), id: "up-#{task.id}" %>
            <% end %>
         </td>
+		
         <td class="col-md-2">
           <%= content_tag :div, tag(:span,
                                     class: "#{task.get_(:icon)}
