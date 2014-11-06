@@ -57,6 +57,7 @@
 			<%= f.text_area :notes, maxlength: 250, cols: 63, rows: 4, class:"form-control", disabled: disabled  %>
 		</div>
 	</div>
+
 	<% if !disabled %>
 	<div class="form-group">
 		<div class="col-xs-3 control-label">
@@ -74,7 +75,7 @@
 		<div class="col-xs-3">
 			<div id='date_comp' class='input-group date'>
 			<!--<%= f.date_field :due_date, min: next_work_date, disabled: disabled, required: true  %>-->
-				<input type="text" id='date' class="form-control" required>
+				<input type="text" id='date' class="form-control" required <%= disabled ? "disabled" : "" %>>
 				<span class="input-group-addon"><i id='icon_date' class="glyphicon glyphicon-calendar"></i></span>
 				<%= f.hidden_field :due_date %>
 			</div>

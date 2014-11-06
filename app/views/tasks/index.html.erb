@@ -1,10 +1,10 @@
-<h1>Listing tasks</h1>
+<h1>Listing Voice Requests</h1>
 
-<table class="table table-bordered table-striped">
+<table id="tasks-admin" class="table table-bordered table-striped">
   <thead>
     <tr>
       <th>#</th>
-      <th>Talen Name</th>
+      <th>Talent Name</th>
       <th>Client</th>
       <th>Video Title</th>
       <th>Notes</th>
@@ -28,7 +28,9 @@
         <td><%= task.mdy %></td>
         <td><div class="text-center"><%= task.rush_status %></div></td>
         <td><%= task.rate %></td>
-        <td><%= link_to tag(:span,  class: "glyphicon glyphicon-save text-primary"), task.script, :target => "_blank"%></td></td>
+        <td><%= link_to tag(:span,
+                            class: "glyphicon glyphicon-save text-primary"),
+                            task.script, :target => "_blank"%></td></td>
         <td>
           <% deliverable = task.deliverable %>
           <% if deliverable %>
@@ -55,5 +57,5 @@
 <%= image_tag "ribbon_admin.png", class: 'img-responsive center-block' %>
 <br>
 <% if iswriter? %>
-  <%= link_to 'New Task', new_task_path %>
+  <%= link_to 'New Voice Request', new_task_path %>
 <% end %>
