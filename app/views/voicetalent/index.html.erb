@@ -27,7 +27,7 @@
         <td><%= task.rate %></td>
         <td><%= link_to tag(:span,
                             class: "glyphicon glyphicon-save text-primary"),
-                        task.script, :class => "cell-scripts",
+                        "#{task.script.file}", :class => "cell-scripts",
                         :data => {id: task.id}, :target => "_blank"%></td>
 
         <td>

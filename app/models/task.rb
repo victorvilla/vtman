@@ -1,13 +1,12 @@
 class Task < ActiveRecord::Base
-  
-  # mount_uploader :file, 
-  attr_accessor :file
-  
+
   belongs_to :client
   belongs_to :writer, :class_name => 'GuidesparkUser'
   belongs_to :content_ops, :class_name => 'GuidesparkUser'
   belongs_to :voice_talent_user
   has_many :assets, dependent: :destroy
+  accepts_nested_attributes_for :assets
+
   has_many :scripts, -> { where({:asset_type => 0}) }, :class_name => "Asset"
   has_many :uploads, -> { where({:asset_type => 1}) }, :class_name => "Asset"
   has_many :events, dependent: :destroy

@@ -102,26 +102,40 @@
 	</div>
 
 	<% end %>
-	<% if !disabled %>
-	    <div class="form-group">
-			<div class="col-xs-3 control-label">
-				<%= f.label :file, 'Upload script *' %>
-			</div>
-			<div id="test" class="col-xs-6">
-				<%= f.file_field :file, accept: 'application/pdf,text/plain,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.wordprocessingml.template', class:"form-control",  required: true %>
-			</div>
-	    </div>
-	<% else %>
-		<div class="form-group">
-		<div class="col-xs-3 control-label">
-			<%= f.label :file, 'Deliverable *' %>
-		</div>
-		<div class="col-xs-6">
-			<%= f.file_field :file, accept: 'video/mp4,audio/mpeg,audio/wav' %>
-		</div>
-	</div>
-	<% end %>
 
+    <% if disabled %>
+      <%= @task.uploads.size %>
+      <%= f.fields_for :assets,
+                       @task.assets.build(asset_type: :audio) do |upload| %>
+        <div class="form-group">
+          <div class="col-xs-3 control-label">
+            <%= upload.label :script, 'Deliverable*' %>
+          </div>
+          <div id="test" class="col-xs-6">
+            <%= upload.file_field :file,
+                                  class:"form-control",
+                                  required: true %>
+            <%= upload.hidden_field :asset_type,
+                                    :value => :audio %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <%= f.fields_for :assets do |script| %>
+        <div class="form-group">
+          <div class="col-xs-3 control-label">
+            <%= script.label :script, 'Upload script *' %>
+          </div>
+          <div id="test" class="col-xs-6">
+            <%= script.file_field :file,
+                                  class:"form-control",
+                                  required: true %>
+            <%= script.hidden_field :asset_type,
+                                    :value => :script %>
+            </div>
+          </div>
+      <% end %>
+    <% end %>
 
 	<%= f.hidden_field :deliverable , :value => disabled %>
 	<div class="form-group">

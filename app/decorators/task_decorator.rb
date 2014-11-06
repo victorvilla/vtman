@@ -32,8 +32,7 @@ class TaskDecorator < Draper::Decorator
   end
 
   def script
-    s = self.get_file(:scripts)
-    return "/uploads/#{s.file}" unless s.nil?
+    self.get_file(:scripts)
   end
 
   def deliverable
