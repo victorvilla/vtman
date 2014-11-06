@@ -33,7 +33,7 @@ gem 'bcrypt'
 gem 'jquery-datatables-rails'
 gem 'bootstrap-datepicker-rails'
 gem 'carrierwave'
-
+gem 'fog'
 # Use unicorn as the app server
 # gem 'unicorn'
 
