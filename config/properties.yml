@@ -1,0 +1,6 @@
+# Voice Talent Manager version 1.0
+#   These are some properties to our system
+#
+
+voice_request:
+  alias: 'voice_request_alias_list'

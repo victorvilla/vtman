@@ -19,8 +19,7 @@ class TaskDecorator < Draper::Decorator
                     text: 'Overdue'}}
 
   def mdy
-    # FIX THIS. This is related to the Date issue.
-    object.due_date.strftime("%d-%m-%Y") unless object.due_date.nil?
+    object.due_date.strftime("%m-%d-%Y") unless object.due_date.nil?
   end
 
   def rate
