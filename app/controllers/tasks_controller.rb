@@ -91,7 +91,7 @@ class TasksController < ApplicationController
 
     # Add writer to the task which is on session.
     @task.writer = current_user
-    
+
     # TODO: Change the hash to something not predictable as the task.ID
     hash = Digest::MD5.hexdigest(@task.id.to_s)
     @task.events.create([{event_type: :hash_code, feedback: hash }])
@@ -127,11 +127,14 @@ class TasksController < ApplicationController
 
     respond_to do |format|
 
-      @task.events.create([{event_type: :file_uploaded,
-                            feedback: "Uploaded file"}])
+
       @task.finished!
 
       if @task.update(task_params)
+
+        @task.events.create([{event_type: :file_uploaded,
+                      feedback: "Uploaded file"}])
+
         ContentMailer.file_uploaded_email(@task).deliver
         @task.events.create([{event_type: :upload_cops_notification, feedback: "Email sent to Content Ops notifing the upload: #{@task.content_ops.email}"}])
 
@@ -183,7 +186,7 @@ class TasksController < ApplicationController
         redirect_to login_url
       end
     end
-    
+
     def get_voice_request_alias
       yaml = YAML.load_file('config/properties.yml')
       req_alias = yaml.fetch('voice_request')['alias']
