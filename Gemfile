@@ -27,12 +27,12 @@ gem 'spring',        group: :development
 
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'draper', '~> 1.3'
-
-
+gem 'dotenv-rails', :groups => [:development, :test]
 gem 'bcrypt'
 gem 'jquery-datatables-rails'
 gem 'bootstrap-datepicker-rails'
-
+gem 'carrierwave'
+gem 'fog'
 # Use unicorn as the app server
 # gem 'unicorn'
 

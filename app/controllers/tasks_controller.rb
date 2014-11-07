@@ -14,7 +14,7 @@ class TasksController < ApplicationController
   def new
     if iswriter?
       @task = Task.new
-      @voiceTalentUsers = VoiceTalentUser.actives
+      @task.assets.build(asset_type: :script) if @task.assets.empty?
     else
       flash[:danger] = "Only writers can add a New Voice Request."
       redirect_to tasks_path
@@ -60,13 +60,6 @@ class TasksController < ApplicationController
     end
   end
 
-  def upload(file)
-    uploaded_io = file
-    File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
-      file.write(uploaded_io.read)
-    end
-  end
-
   def confirm
     # Set the new status to the task
     if @task
@@ -98,13 +91,11 @@ class TasksController < ApplicationController
 
     # Add writer to the task which is on session.
     @task.writer = current_user
-    
+
     # TODO: Change the hash to something not predictable as the task.ID
     hash = Digest::MD5.hexdigest(@task.id.to_s)
     @task.events.create([{event_type: :hash_code, feedback: hash }])
 
-    file = params[:task][:file]
-    self.add_assets(file, false)
 
     respond_to do |format|
       if @task.save
@@ -135,12 +126,15 @@ class TasksController < ApplicationController
     user = Task.find(params[:id]).voice_talent_user
 
     respond_to do |format|
-      file = params[:task][:file]
-      self.add_assets(file, params[:task][:deliverable])
-      @task.events.create([{event_type: :file_uploaded, feedback: "Uploaded file: #{file}"}])
+
+
       @task.finished!
 
       if @task.update(task_params)
+
+        @task.events.create([{event_type: :file_uploaded,
+                      feedback: "Uploaded file"}])
+
         ContentMailer.file_uploaded_email(@task).deliver
         @task.events.create([{event_type: :upload_cops_notification, feedback: "Email sent to Content Ops notifing the upload: #{@task.content_ops.email}"}])
 
@@ -164,12 +158,6 @@ class TasksController < ApplicationController
       format.json { head :no_content }
     end
   end
-
-    def add_assets(file, deliverable)
-        self.upload(file)
-        @task.assets.create([{asset_type: deliverable ? 1 : 0, file: file.original_filename,
-                          title: file.original_filename}])
-    end
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -198,7 +186,7 @@ class TasksController < ApplicationController
         redirect_to login_url
       end
     end
-    
+
     def get_voice_request_alias
       yaml = YAML.load_file('config/properties.yml')
       req_alias = yaml.fetch('voice_request')['alias']
@@ -215,6 +203,6 @@ class TasksController < ApplicationController
     def task_params
       params.require(:task).permit(:voice_talent_user_id, :content_ops_id, :client_id, :video_title,
                                    :type_script, :number_chapters, :notes, :rush, :rate, :due_date,
-                                   :status, :file)
+                                   :status, assets_attributes: [:file, :asset_type])
     end
 end
