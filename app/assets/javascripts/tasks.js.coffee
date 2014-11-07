@@ -139,7 +139,7 @@ validate_rate = (vt) ->
       num_chapters = $("#task_number_chapters").val()
 
       if type_script_id == '' || rush == '' || num_chapters == '' || voice_talent_user_id == ''
-        returngit
+        return
       console.log "type_script_id : " + type_script_id + ". rush : " + rush + ". num_chapters : " + num_chapters
 
       total = 0.0
@@ -159,7 +159,7 @@ validate_rate = (vt) ->
       else if type_script_id == 'correction'
         total = vt.correction_rate
         console.log '. correction_rate: ' + vt.correction_rate
-      
+
       $('#task_rate').val(Math.floor(total))
       console.log '. total: ' + $('#task_rate').val()
       $('.total').html('$ ' + $('#task_rate').val())
