@@ -1,17 +1,17 @@
-<h1>Listing tasks</h1>
+<h1>Listing Voice Requests</h1>
 
-<table class="table table-bordered table-striped">
+<table id="tasks-admin" class="table table-bordered table-striped">
   <thead>
     <tr>
       <th>#</th>
-      <th>Talen Name</th>
+      <th>Talent Name</th>
       <th>Client</th>
       <th>Video Title</th>
       <th>Notes</th>
       <th>Due date</th>
       <th>Rush</th>
       <th>Rate</th>
-      <th>Download</th>
+      <th>Script</th>
       <th>Deliverable</th>
       <th>Status</th>
     </tr>
@@ -20,22 +20,44 @@
   <tbody>
     <% @tasks.each_with_index do |task, index | %>
       <tr>
-        <td><%= link_to index + 1, task %></td>
+        <td><%= index + 1 %></td>
         <td><%= task.voice_talent_user.first_name %></td>
         <td><%= task.client.name %></td>
         <td><%= task.video_title %></td>
         <td><%= task.notes %></td>
         <td><%= task.mdy %></td>
-        <td><%= task.rush_status %></td>
+        <td><div class="text-center"><%= task.rush_status %></div></td>
         <td><%= task.rate %></td>
-        <td></td>
-        <td></td>
-        <td><%= task.show_status %></td>
+        <% script = task.script %>
+        <td><%= link_to tag(:span,
+                            class: "glyphicon glyphicon-save text-primary"),
+                            "#{script.file}", :target => "_blank"%></td>
+        <td>
+          <% deliverable = task.deliverable %>
+          <% if deliverable %>
+          <%= link_to content_tag(:span, File.basename("#{deliverable.file}"),
+                                  id: "up-#{task.id}",
+                                  class: "#{task.download_icon}"),
+                      "#{deliverable.file}",
+                      :target => "_blank" %>
+          <% else %>
+            <%= tag(:span, id: "up-#{task.id}",
+                          class: "#{task.download_icon}") %>
+          <% end %>
+        </td>
+        <td>
+          <%= content_tag(:div, tag(:span,
+                                    class: "#{task.get_(:icon)} "\
+                                           "#{task.get_(:color)}") ,
+                          class: "text-center") %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
+<br/>
+<%= image_tag "ribbon_admin.png", class: 'img-responsive center-block' %>
 <br>
-
-<%= link_to 'New Task', new_task_path %>
+<% if iswriter? %>
+  <%= link_to 'New Voice Request', new_task_path %>
+<% end %>

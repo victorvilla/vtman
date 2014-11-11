@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Task # <%= @task.id %><br/>
+       Task Status: <%= @task.get_(:text) %></p>
+
+    <p>Talent Name: <%= @user.first_name %> <%= @user.last_name %> <br/>
+       Client Name: <%= @task.client.name %> <br/>
+       Video Title: <%= @task.video_title %>
+    </p>
+    <p>Type of Script: <%= @task.get_type %> <br/>
+       <% if @task.partial? %>
+       Number of Chapters: <%= @task.number_chapters %> <br/>
+       <% end%>
+       <% if !@task.notes.nil? %>
+       Notes: <%= @task.notes %> <br/>
+       <% end %>
+     </p>
+     <p>Due Date: <%= @task.mdy %> <br/>
+        Rush: <%= @task.rush ? 'Yes' : 'No' %> <br/>
+        Rate: <%= @task.rate %>
+     </p>
+  </body>
+</html>

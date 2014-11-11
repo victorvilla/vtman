@@ -1,4 +1,5 @@
-<%= form_for(@task) do |f| %>
+<%= form_for(@task,  html: { :class => 'form-horizontal',
+                             role: 'form', multipart: true}) do |f| %>
   <% if @task.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
@@ -11,49 +12,8 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :voice_talent_user_id, 'Voice Talent Name *' %>
-    <%= f.select :voice_talent_user_id, VoiceTalentUser.all.collect { |u| [u.first_name.titleize + ' '+ u.last_name.titleize, u.id]}, :prompt => '- Select -' %>
-  </div>
-  <div class="field">
-    <%= f.label :guidespark_user_id, 'Voice Request Alias *' %>
-    <%= f.select :guidespark_user_id, GuidesparkUser.all.collect { |u| [u.first_name.titleize + ' ' + u.last_name.titleize, u.id]}, prompt: '- Select -' %>
-  </div>
-  <div class="field">
-    <%= f.label :client_id, 'Client Name' %>
-    <%= f.select :client_id, Client.all.collect { |u| [u.name.titleize, u.id]}, prompt: '- Select -' %>
-  </div>  
-  <div class="field">
-    <%= f.label :video_title, 'Video Title *' %>
-    <%= f.text_field :video_title %>
-  </div>
-  <div class="field">
-    <%= f.label :type_script, "Type of script *" %>
-	<%= f.select :type_script, type_script_options, { prompt: '- Select type script -' } %>
-	</div>
-  <div class="field">
-    <%= f.label :number_chapters, '# of Chapters *' %>
-    <%= f.number_field :number_chapters %>
-  </div>
-  <div class="field">
-    <%= f.label :notes, "#{:notes}" %>
-    <%= f.text_area :notes %>
-  </div>
-  <div class="field">
-    <%= f.label :due_date, 'Due Date *' %>
-    <%= f.date_field :due_date %>
-  </div>
-  <div class="field">
-    <%= f.label :rush, 'Rush *' %>
-	<%= f.select :rush, rush_options %>
-	<%= f.label :rush, 'Please select Yes only if you need within 24 hours.' %>
-  </div>
-  <div class="field">
-    <%= f.label :rate %>
-    <%= f.text_field :rate %>
-  </div>
-  <div class="actions">
-	* You must fill in these fields to create a new task.
-    <%= f.submit 'Create Request' %>
-  </div>
+
+    <%= render 'fields', :f => f, :disabled => @readonly, :task => @task %>
+
+
 <% end %>

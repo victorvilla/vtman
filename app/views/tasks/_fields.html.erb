@@ -1,0 +1,137 @@
+	<% disabled ||= false %>
+	<% if !disabled %>
+	<div class="form-group">
+		<div class="col-xs-3 control-label">
+			<%= f.label :voice_talent_user_id, 'Voice Talent Name *' %>
+		</div>
+		<div class="col-xs-6">
+			<%= f.select :voice_talent_user_id, voice_talent_options, {prompt: '- Select Voice Talent -'}, class:"form-control", disabled: disabled, required: true %>
+		</div>
+	</div>
+	<% end %>
+	<div class="form-group">
+		<div class="col-xs-3 control-label">
+			<%= f.label :client_id, 'Client Name *' %>
+		</div>
+		<div class="col-xs-6">
+			<%= f.select :client_id, client_options, {prompt: '- Select Client-'}, class:"form-control", disabled: disabled, required: true  %>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-xs-3 control-label">
+			<%= f.label :video_title, 'Video Title *' %>
+		</div>
+		<div class="col-xs-6">
+			<%= f.text_field :video_title, maxlength:100, class:"form-control", disabled: disabled, required: true %>
+		</div>
+	</div>
+	<% if !disabled %>
+	<div class="form-group">
+		<div class="col-xs-3 control-label">
+			<%= f.label :type_script, "Type of Script *" %>
+		</div>
+		<div class="col-xs-6">
+			<div class="form-group">
+				<div class="col-xs-6">
+					<%= f.select :type_script, type_script_options, { prompt: '- Select type script -' }, class:"form-control", disabled: disabled, required: true %>
+				</div>
+				<div class="col-xs-6">
+					<div class="form-group chapters">
+						<div class="col-xs-7 control-label">
+							<%= f.label :number_chapters, '# Chapters *'%>
+						</div>
+						<div class="col-xs-5">
+							<%= f.number_field :number_chapters, min: 1, max: 99, class:"form-control", required: true %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<% end %>
+	<div class="form-group">
+		<div class="col-xs-3 control-label">
+			<%= f.label :notes, "Notes" %>
+		</div>
+		<div class="col-xs-6">
+			<%= f.text_area :notes, maxlength: 250, cols: 63, rows: 4, class:"form-control", disabled: disabled  %>
+		</div>
+	</div>
+
+	<% if !disabled %>
+	<div class="form-group">
+		<div class="col-xs-3 control-label">
+			<%= f.label :rush, 'Rush *' %>
+		</div>
+		<div class="col-xs-6">
+			<%= f.select :rush, rush_options, { include_blank: false }, class:"form-control", required: true, disabled: disabled %>
+			<small>Please select Yes only if you need within 24 hours.</small>
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-xs-3 control-label">
+			<%= f.label :due_date, 'Due Date *' %>
+		</div>
+		<div class="col-xs-3">
+			<div id='date_comp' class='input-group date'>
+			<!--<%= f.date_field :due_date, min: next_work_date, disabled: disabled, required: true  %>-->
+				<input type="text" id='date' class="form-control" required <%= disabled ? "disabled" : "" %>>
+				<span class="input-group-addon"><i id='icon_date' class="glyphicon glyphicon-calendar"></i></span>
+				<%= f.hidden_field :due_date %>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-xs-3 control-label">
+			<%= f.label :rate , 'Rate' %>
+		</div>
+		<div class="col-xs-6">
+			<p class="form-control-static total"><%= number_to_currency @task.rate %></p>
+			<%= f.hidden_field :rate, :value => 0.0 %>
+		</div>
+	</div>
+
+	<% end %>
+    <% if disabled %>
+      <%= f.fields_for :assets,
+                       @task.assets.build(asset_type: :audio) do |upload| %>
+        <div class="form-group">
+          <div class="col-xs-3 control-label">
+            <%= upload.label :script, 'Deliverable *' %>
+          </div>
+          <div id="test" class="col-xs-6">
+            <%= upload.file_field :file,
+                                  class:"form-control",
+                                  required: true %>
+            <%= upload.hidden_field :asset_type,
+                                    :value => :audio %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <%= f.fields_for :assets do |script| %>
+        <div class="form-group">
+          <div class="col-xs-3 control-label">
+            <%= script.label :script, 'Upload script *' %>
+          </div>
+          <div id="test" class="col-xs-6">
+            <%= script.file_field :file,
+                                  class:"form-control",
+                                  required: true %>
+            <%= script.hidden_field :asset_type,
+                                    :value => :script %>
+            </div>
+          </div>
+      <% end %>
+    <% end %>
+
+	<%= f.hidden_field :deliverable , :value => disabled %>
+	<div class="form-group">
+		<div class="col-xs-9">
+			* You must fill in these fields to create a new request.
+		</div>
+		<div class="col-xs-3">
+			<%= f.submit disabled ? 'Upload Deliverable' : 'Create Request', :class=>'btn btn-primary' %>
+		</div>
+	</div>

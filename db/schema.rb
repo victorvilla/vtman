@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141022181748) do
+ActiveRecord::Schema.define(version: 20141028152444) do
 
   create_table "assets", force: true do |t|
     t.string   "title"
@@ -38,16 +38,27 @@ ActiveRecord::Schema.define(version: 20141022181748) do
 
   add_index "clients", ["is_active"], name: "index_clients_on_is_active"
 
+  create_table "events", force: true do |t|
+    t.integer  "event_type"
+    t.string   "feedback"
+    t.integer  "task_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "events", ["task_id"], name: "index_events_on_task_id"
+
   create_table "guidespark_users", force: true do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
-    t.boolean  "is_active",      default: true
+    t.boolean  "is_active",       default: true
     t.integer  "profile"
     t.string   "office_address"
     t.string   "office_phone"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "password_digest"
   end
 
   add_index "guidespark_users", ["is_active"], name: "index_guidespark_users_on_is_active"
@@ -65,13 +76,14 @@ ActiveRecord::Schema.define(version: 20141022181748) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "voice_talent_user_id"
-    t.integer  "guidespark_user_id"
     t.integer  "client_id"
+    t.boolean  "deleted",              default: false
+    t.integer  "writer_id"
+    t.integer  "content_ops_id"
   end
 
   add_index "tasks", ["client_id"], name: "index_tasks_on_client_id"
   add_index "tasks", ["due_date"], name: "index_tasks_on_due_date"
-  add_index "tasks", ["guidespark_user_id"], name: "index_tasks_on_guidespark_user_id"
   add_index "tasks", ["status"], name: "index_tasks_on_status"
   add_index "tasks", ["voice_talent_user_id"], name: "index_tasks_on_voice_talent_user_id"
 
@@ -89,6 +101,8 @@ ActiveRecord::Schema.define(version: 20141022181748) do
     t.decimal  "correction_rate",   default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "nickname"
+    t.string   "digest"
   end
 
   add_index "voice_talent_users", ["is_active"], name: "index_voice_talent_users_on_is_active"

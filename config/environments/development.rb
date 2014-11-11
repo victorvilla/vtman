@@ -34,4 +34,17 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+      :address => "smtp.gmail.com",
+      :port => '587',
+      :domain => ENV['EMAIL_DOMAIN'],
+      :authentication => :plain,
+      :user_name =>  ENV['EMAIL_USER'],
+      :password => ENV['EMAIL_PASS']
+  }
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = { :host => 'g2dev.guidespark.net' }
 end
