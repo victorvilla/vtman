@@ -4,10 +4,13 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   before_action :get_hash, only: [:confirm]
   before_action :logged_in_user, only: [:index, :new, :create]
+
+  decorates_assigned :tasks
+
   # GET /tasks
   # GET /tasks.json
   def index
-    @tasks = Task.includes(:scripts, :uploads, :client, :voice_talent_user).all.decorate
+    @tasks = Task.includes(:scripts, :uploads, :client, :voice_talent_user).all
   end
 
   # GET /tasks/new

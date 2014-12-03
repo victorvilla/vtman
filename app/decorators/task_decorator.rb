@@ -1,3 +1,5 @@
+require 'uri'
+
 class TaskDecorator < Draper::Decorator
   delegate_all
 
@@ -28,6 +30,10 @@ class TaskDecorator < Draper::Decorator
 
   def get_file(property)
     return object.send(property).last
+  end
+
+  def filename(property)
+    File.basename(URI.parse("#{property.file}").path)
   end
 
   def script
