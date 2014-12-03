@@ -5,18 +5,20 @@ if Client.any?
   Client.destroy_all
 end
 
-clients = Client.create([{name: 'Facebook', email: 'contact@facebook.com', phone: '1111122222'},
+Client.create([
+   {name: 'Facebook', email: 'contact@facebook.com', phone: '1111122222'},
    {name: 'Adobe',    email: 'contact@adobe.com',    phone: '3333344444'},
    {name: 'Google',   email: 'contact@google.com',   phone: '5555566666'},
    {name: 'AT & T',     email: 'contact@atandt.com',   phone: '9999900000'},
-   {name: 'Ello',     email: 'contact@ello.com',     phone: '7777788888', is_active: 0}])
+   {name: 'Ello',     email: 'contact@ello.com',     phone: '7777788888',
+    is_active: 0}])
 
 #Drop any Voice Talent User that exist
 if VoiceTalentUser.any?
   VoiceTalentUser.destroy_all
 end
 
-talents = VoiceTalentUser.create([
+VoiceTalentUser.create([
     {first_name: 'Esparta', last_name: 'Palma', email: 'esparta@gmail.com',
      nickname: 'esparta', digest: Digest::MD5.hexdigest('esparta'),
      office_phone: '7878787878', full_rate: 175.0, rush_full_rate: 175.0,
@@ -100,7 +102,7 @@ end
 #     1 ... C-Ops
 #     2 ... Writer
 
-gs = GuidesparkUser.create([
+GuidesparkUser.create([
   {first_name: 'voice_request_alias_list',
    last_name: 'Villa', email: 'vvilla@guidespark.com',
    profile: 1, office_address: '1350 Willow Road Suite 201',
@@ -127,52 +129,3 @@ gs = GuidesparkUser.create([
    profile: 2, office_address: 'Boston, US', office_phone: '681681681',
    password: "Diego", password_confirmation: "Diego"}
   ])
-
-if Task.any?
-  Task.destroy_all
-end
-
-
-Task.create!([
-  {video_title: "Lorem ipsum dolor sit amet",
-   type_script: Task.type_scripts[:full], number_chapters: 1,
-   notes: "Maecenas consectetur velit ac metus congue", rush: false,
-   rate: talents.to_a[0].full_rate, due_date: "2014-10-13",
-   status: Task.statuses[:overdue],
-   voice_talent_user_id: talents.to_a[0].id,
-   writer_id: gs.to_a[0].id, content_ops_id: gs.to_a[1].id,
-   client_id: clients.to_a[0].id },
-  {video_title: "Morbi vel dolor malesuada",
-   type_script: Task.type_scripts[:partial], number_chapters: 1,
-   notes: "Vestibulum non vestibulum est", rush: false,
-   rate: talents.to_a[0].partial_rate, due_date: "2014-10-14",
-   status: Task.statuses[:acknowledged],
-   voice_talent_user_id: talents.to_a[0].id,
-   writer_id: gs.to_a[0].id, content_ops_id: gs.to_a[1].id,
-   client_id: clients.to_a[0].id },
-  {video_title: "Vivamus eleifend",
-   type_script: Task.type_scripts[:full], number_chapters: 1,
-   notes: "sit amet pretium neque leo sollicitudin lacus", rush: true,
-   rate: talents.to_a[2].rush_full_rate, due_date: "2014-10-17",
-   status: Task.statuses[:wip],
-   voice_talent_user_id: talents.to_a[2].id,
-   writer_id: gs.to_a[2].id, content_ops_id: gs.to_a[3].id,
-   client_id: clients.to_a[1].id },
-  {video_title: "Etiam elementum congue ornare",
-   type_script: Task.type_scripts[:full], number_chapters: 1,
-   notes: "In hac habitasse platea dictumst", rush: true,
-   rate: talents.to_a[3].rush_full_rate, due_date: "2014-10-25",
-   status: Task.statuses[:finished],
-   voice_talent_user_id: talents.to_a[3].id,
-   writer_id: gs.to_a[0].id, content_ops_id: gs.to_a[3].id,
-   client_id: clients.to_a[2].id },
-  {video_title: "Morbi hendrerit ligula eu interdum",
-   type_script: Task.type_scripts[:full], number_chapters: 1,
-   notes: "Pellentesque hendrerit risus", rush: false,
-   rate: talents.to_a[4].full_rate, due_date: "2014-11-09",
-   status:  Task.statuses[:acknowledged],
-   voice_talent_user_id: talents.to_a[4].id,
-   writer_id: gs.to_a[4].id, content_ops_id: gs.to_a[1].id,
-  client_id: clients.to_a[3].id }])
-
-
