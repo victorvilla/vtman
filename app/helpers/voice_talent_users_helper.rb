@@ -1,0 +1,2 @@
+module VoiceTalentUsersHelper
+end

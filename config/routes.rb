@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'sessions/new'
 
   resources :tasks
+  resources :voice_talent_users
 
   get    'login'   => 'sessions#new'
   post   'login'   => 'sessions#create'
