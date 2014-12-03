@@ -1,4 +1,4 @@
-class VoicetalentController < ApplicationController
+class DashboardController < ApplicationController
   before_action :get_hash
 
   decorates_assigned :tasks

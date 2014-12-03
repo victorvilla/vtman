@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   root 'tasks#index'
   get 'tasks/new/rate'  => 'tasks#rate'
 
-  get 'dashboard/:voicetalent/:digest' => 'voicetalent#index'
+  get 'dashboard/:voicetalent/:digest' => 'dashboard#index'
 
   get 'api/tasks/status/' => 'tasks#status'
   # The priority is based upon order of creation: first created -> highest priority.
