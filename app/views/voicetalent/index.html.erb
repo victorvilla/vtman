@@ -28,22 +28,33 @@
         <td><%= link_to tag(:span,
                             class: "glyphicon glyphicon-save text-primary"),
                         "#{task.script.file}", :class => "cell-scripts",
-                        :data => {id: task.id}, :target => "_blank"%></td>
+                        data: {id: task.id}, target: "_blank",
+                        title: task.filename(task.script) %>
+        </td>
 
         <td>
           <% deliverable = task.deliverable %>
-          
+
            <% if deliverable %>
-      			<%= link_to content_tag(:span, deliverable.file,
-					class:  "#{task.upload_icon}",
-               		id: "up-icon-#{task.id}"), edit_task_path(task), id: "up-#{task.id}" %>
-		   <% else %>
-           		<%= link_to tag(:span,
-					class:  "#{task.upload_icon}",
-                    id: "up-icon-#{task.id}"), edit_task_path(task), id: "up-#{task.id}" %>
+              <%= link_to tag(:span,
+                              class:  "#{task.upload_icon}",
+                              id: "up-icon-#{task.id}"),
+                        edit_task_path(task),
+                        id: "up-#{task.id}",
+                        title: "Add a new deliverable" %>
+              <%= link_to truncate(task.filename(deliverable), length: 10),
+                        "#{deliverable.file}",
+                        target: "_blank",
+                        title: task.filename(deliverable) %>
+          <% else %>
+            <%= link_to tag(:span,
+                            class:  "#{task.upload_icon}",
+                            id: "up-icon-#{task.id}"),
+                        edit_task_path(task),
+                        id: "up-#{task.id}" %>
            <% end %>
         </td>
-		
+
         <td class="col-md-2">
           <%= content_tag :div, tag(:span,
                                     class: "#{task.get_(:icon)}
