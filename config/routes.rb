@@ -16,6 +16,8 @@ Rails.application.routes.draw do
   get 'dashboard/:voicetalent/:digest' => 'dashboard#index'
 
   get 'api/tasks/status/' => 'tasks#status'
+
+  get 'admin' => 'admin#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
