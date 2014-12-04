@@ -183,13 +183,6 @@ class TasksController < ApplicationController
                                    feedback: params[:hash] }).take
     end
 
-    def logged_in_user
-      unless logged_in?
-        flash[:danger] = "Please log in."
-        redirect_to login_url
-      end
-    end
-
     def get_voice_request_alias
       yaml = YAML.load_file('config/properties.yml')
       req_alias = yaml.fetch('voice_request')['alias']

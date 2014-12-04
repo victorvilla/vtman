@@ -1,4 +1,5 @@
 class VoiceTalentUsersController < ApplicationController
+  before_action :logged_in_user
   before_action :set_voice_talent_user, only: [:show, :edit, :update, :destroy]
 
   # GET /voice_talent_users
