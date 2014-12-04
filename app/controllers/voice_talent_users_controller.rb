@@ -5,6 +5,10 @@ class VoiceTalentUsersController < ApplicationController
   # GET /voice_talent_users.json
   def index
     @voice_talent_users = VoiceTalentUser.actives
+    respond_to do |format|
+       format.html # index.html.erb
+       format.json { render json: VoicetalentsDatatable.new(view_context) }
+    end
   end
 
   # GET /voice_talent_users/1
