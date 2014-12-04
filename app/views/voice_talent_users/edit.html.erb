@@ -1,6 +1,12 @@
-<h1>Editing voice_talent_user</h1>
+<%= form_for(@voice_talent_user, html: { :class => 'form-horizontal', role: 'form'}) do |f| %>
+  <div>
+    <div id="error_explanation" style="display:none;">
+    </div>
+    <%= render 'form', :f => f, :voice_talent_user => @voice_talent_user %>
+  </div>
+  <div>
+    <button type="button" class="btn btn-default">Cancel</button>
+    <%= f.submit 'Update', :class => 'btn btn-primary' %>
+  </div>
+<% end %>
 
-<%= render 'form' %>
-
-<%= link_to 'Show', @voice_talent_user %> |
-<%= link_to 'Back', voice_talent_users_path %>
