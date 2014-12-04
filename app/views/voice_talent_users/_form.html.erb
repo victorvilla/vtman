@@ -1,17 +1,100 @@
-<%= form_for(@voice_talent_user) do |f| %>
-  <% if @voice_talent_user.errors.any? %>
+<% if @voice_talent_user.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@voice_talent_user.errors.count, "error") %> prohibited this voice_talent_user from being saved:</h2>
 
       <ul>
-      <% @voice_talent_user.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% @voice_talent_user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-group">
+    <div class="col-xs-3 control-label">
+      <%= f.label :first_name, 'First Name' %>
+    </div>
+    <div class="col-xs-8">
+      <%= f.text_field :first_name, id: 'first_name', maxlength:255, class:"form-control", disabled: false, required: true %>
+    </div>
   </div>
-<% end %>
+  <div class="form-group">
+    <div class="col-xs-3 control-label">
+      <%= f.label :last_name, 'Last Name' %>
+    </div>
+    <div class="col-xs-8">
+      <%= f.text_field :last_name, id: 'last_name', maxlength:255, class:"form-control", disabled: false, required: true %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-xs-3 control-label">
+      <%= f.label :is_veteran, 'Veteran' %>
+    </div>
+    <div class="col-xs-8">
+      <%= f.select :is_veteran, veteran_options, { include_blank: false }, id: 'is_veteran', class:"form-control", required: true, disabled: false %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-xs-3 control-label">
+      <%= f.label :nickname, 'Nickname' %>
+    </div>
+    <div class="col-xs-8">
+      <%= f.text_field :nickname, id: 'nickname', maxlength:255, class:"form-control", disabled: false, required: true %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-xs-3 control-label">
+      <%= f.label :email, 'E-mail' %>
+    </div>
+    <div class="col-xs-8">
+      <%= f.text_field :email, id: 'email', maxlength:255, class:"form-control", disabled: false, required: true %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-xs-3 control-label">
+      <h4>Rates</h4>
+    </div>
+    <div class="col-xs-6">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-xs-3 control-label">
+      <%= f.label :full_rate, 'Full Script' %>
+    </div>
+    <div class="col-xs-3">
+      <%= f.number_field :full_rate, id: 'full_rate', min: 0, max:999, class:"form-control", disabled: false, required: true %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-xs-3 control-label">
+      <%= f.label :rush_full_rate, 'Rush Full Script' %>
+    </div>
+    <div class="col-xs-3">
+      <%= f.number_field :rush_full_rate, id: 'rush_full_rate', min: 0, max:9999, class:"form-control", disabled: false, required: true %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-xs-3 control-label">
+      <%= f.label :partial_rate, 'Partial Script' %>
+    </div>
+    <div class="col-xs-3">
+      <%= f.number_field :partial_rate, id: 'partial_rate', min: 0, max:999, class:"form-control", disabled: false, required: true %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-xs-3 control-label">
+      <%= f.label :rush_partial_rate, 'Rush Partial Script' %>
+    </div>
+    <div class="col-xs-3">
+      <%= f.number_field :rush_partial_rate, id: 'rush_partial_rate', min: 0, max:999, class:"form-control", disabled: false, required: true %>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-xs-3 control-label">
+      <%= f.label :correction_rate, 'Correction' %>
+    </div>
+    <div class="col-xs-3">
+      <%= f.number_field :correction_rate, id: 'correction_rate', min: 0, max:999, class:"form-control", disabled: false, required: true %>
+    </div>
+  </div>
+

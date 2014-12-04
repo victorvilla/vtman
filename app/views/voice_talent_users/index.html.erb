@@ -1,38 +1,55 @@
-<h1>Listing voice_talent_users</h1>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <h3>Voice Talent List</h3>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
 
-<%= link_to 'Add', new_voice_talent_user_path %>
+        <a id="add_user_button" role="button" data-toggle="modal" data-target="#addVoiceTalentUserForm" class="btn btn-primary" href="#">Add</a>
 
-<table id="voice-talent-admin" class="table table-bordered table-striped">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Talent Name</th>
-      <th>Veteran?</th>
-      <th>Rate: Full Script (48 hr)</th>
-      <th>Rate: Rush Full Script (24 hr)</th>
-      <th>Rate: Partial Script</th>
-      <th>Rate: Rush Partial Script</th>
-      <th>Rate: Correction</th>
-      <th>Edit</th>
-    </tr>
-  </thead>
+        <table id="voice-talent-admin" class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Talent Name</th>
+              <th>Veteran?</th>
+              <th>Rate: Full Script (48 hr)</th>
+              <th>Rate: Rush Full Script (24 hr)</th>
+              <th>Rate: Partial Script</th>
+              <th>Rate: Rush Partial Script</th>
+              <th>Rate: Correction</th>
+              <th>Edit</th>
+            </tr>
+          </thead>
 
-  <tbody>
-    <% @voice_talent_users.each_with_index do |voice_talent_user, index| %>
-      <tr>
-        <td><%= index + 1 %></td>
-        <td><%= voice_talent_user.first_name + ' ' + voice_talent_user.last_name %></td>
-        <td><%= voice_talent_user.is_veteran == true ? 'Y' : 'N' %></td>
-        <td><%= voice_talent_user.full_rate %></td>
-        <td><%= voice_talent_user.rush_full_rate %></td>
-        <td><%= voice_talent_user.partial_rate %></td>
-        <td><%= voice_talent_user.rush_partial_rate %></td>
-        <td><%= voice_talent_user.correction_rate %></td>
-        <td><%= link_to 'Edit', edit_voice_talent_user_path(voice_talent_user) %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+          <tbody>
+            <% @voice_talent_users.each_with_index do |voice_talent_user, index| %>
+              <tr>
+                <td><%= voice_talent_user.id %></td>
+                <td><%= voice_talent_user.first_name + ' ' + voice_talent_user.last_name %></td>
+                <td><%= voice_talent_user.is_veteran == true ? 'Y' : 'N' %></td>
+                <td><%= number_to_currency(voice_talent_user.full_rate, precision: 0) %></td>
+                <td><%= number_to_currency(voice_talent_user.rush_full_rate, precision: 0) %></td>
+                <td><%= number_to_currency(voice_talent_user.partial_rate, precision: 0) %></td>
+                <td><%= number_to_currency(voice_talent_user.rush_partial_rate, precision: 0) %></td>
+                <td><%= number_to_currency(voice_talent_user.correction_rate, precision: 0) %></td>
+                <td><%= link_to tag(:span, class: "glyphicon glyphicon-pencil text-primary"), edit_voice_talent_user_path(voice_talent_user), target: "_self",
+                                title: voice_talent_user.first_name + ' ' + voice_talent_user.last_name  %></td>
 
-<br>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
 
+        <br>
+        <%= render "new"%>
+        <%= render "edit"%>
+      </div>
+    </div>
+  </div>
+</div>

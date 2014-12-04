@@ -175,10 +175,8 @@ create_date_picker = () ->
         autoclose: true
       })
 
-jQuery ->
-  $(document).ready ->
+$ ->
     $('#task_rush').width(60).resize(true)
-    console.log '. Contiene?: ' + $('#task_file')
     create_date_picker()
 
 $ ->

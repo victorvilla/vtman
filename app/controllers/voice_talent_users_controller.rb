@@ -23,6 +23,10 @@ class VoiceTalentUsersController < ApplicationController
 
   # GET /voice_talent_users/1/edit
   def edit
+    respond_to do |format|
+      format.html
+      # format.json { render template: "edit.html.erb" }
+    end
   end
 
   # POST /voice_talent_users
@@ -32,7 +36,7 @@ class VoiceTalentUsersController < ApplicationController
 
     respond_to do |format|
       if @voice_talent_user.save
-        format.html { redirect_to @voice_talent_user, notice: 'Voice talent user was successfully created.' }
+        format.html { redirect_to voice_talent_users_url, notice: 'Voice talent user was successfully created.' }
         format.json { render :show, status: :created, location: @voice_talent_user }
       else
         format.html { render :new }
@@ -46,7 +50,7 @@ class VoiceTalentUsersController < ApplicationController
   def update
     respond_to do |format|
       if @voice_talent_user.update(voice_talent_user_params)
-        format.html { redirect_to @voice_talent_user, notice: 'Voice talent user was successfully updated.' }
+        format.html { redirect_to voice_talent_users_url, notice: 'Voice talent user was successfully updated.' }
         format.json { render :show, status: :ok, location: @voice_talent_user }
       else
         format.html { render :edit }
@@ -73,6 +77,7 @@ class VoiceTalentUsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def voice_talent_user_params
-      params[:voice_talent_user]
+      params.require(:voice_talent_user).permit(:first_name, :last_name, :nickname, :email,
+             :is_veteran, :full_rate, :rush_full_rate, :rush_partial_rate, :partial_rate, :correction_rate)
     end
 end
