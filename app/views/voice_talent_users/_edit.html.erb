@@ -1,7 +1,8 @@
-<div class="modal fade">
- <div class="modal-dialog">
+
+<div class="modal fade add-new-user" id="editVoiceTalentUserForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
-      <%= form_for(@voice_talent_user, html: { :class => 'form-horizontal', role: 'form'}, remote: true) do |f| %>
+      <%= form_for(@voice_talent_user, html: { :class => 'form-horizontal form-group__inside_table', role: 'form'}) do |f| %>
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h3 class="modal-title" id="myModalLabel">Edit Entry</h3>

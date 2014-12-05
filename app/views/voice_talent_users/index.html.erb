@@ -9,8 +9,8 @@
     </div>
     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
       <div class="panel-body">
-
         <a id="add_user_button" role="button" data-toggle="modal" data-target="#addVoiceTalentUserForm" class="btn btn-primary" href="#">Add</a>
+
 
         <table id="voice-talent-admin" class="table table-bordered table-striped">
           <thead>
@@ -38,17 +38,18 @@
                 <td><%= number_to_currency(voice_talent_user.partial_rate, precision: 0) %></td>
                 <td><%= number_to_currency(voice_talent_user.rush_partial_rate, precision: 0) %></td>
                 <td><%= number_to_currency(voice_talent_user.correction_rate, precision: 0) %></td>
-                <td><%= link_to tag(:span, class: "glyphicon glyphicon-pencil text-primary"), edit_voice_talent_user_path(voice_talent_user), target: "_self",
-                                title: voice_talent_user.first_name + ' ' + voice_talent_user.last_name  %></td>
+                <td>
 
+                  <a id="<%= voice_talent_user.id %>" role="button" data-toggle="modal" data-target="#editVoiceTalentUserForm"
+                     data-whatever="<%=(voice_talent_user.to_s)%>" class="glyphicon glyphicon-pencil text-primary" href="#"></a>
+                  <% @voice_talent_user = voice_talent_user %>
+                  <%= render "edit"%>
+                </td>
               </tr>
             <% end %>
           </tbody>
         </table>
-
-        <br>
         <%= render "new"%>
-        <%= render "edit"%>
       </div>
     </div>
   </div>

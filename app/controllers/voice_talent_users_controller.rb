@@ -24,9 +24,14 @@ class VoiceTalentUsersController < ApplicationController
 
   # GET /voice_talent_users/1/edit
   def edit
+    voice_talent_user_id = params[:id]
+    vt = VoiceTalentUser.actives.find(voice_talent_user_id)
+    @voice_talent_user = vt
+
     respond_to do |format|
-      format.html
-      # format.json { render template: "edit.html.erb" }
+      format.html { render partial: 'edit', location: @voice_talent_user }
+      format.json { render json: { :voice_talent_user => @voice_talent_user}, status: :ok, content_type: 'text/json' }
+      #format.js   { render action: voice_talent_users_url, status: :created, location: @voice_talent_user }
     end
   end
 
@@ -39,9 +44,11 @@ class VoiceTalentUsersController < ApplicationController
       if @voice_talent_user.save
         format.html { redirect_to voice_talent_users_url, notice: 'Voice talent user was successfully created.' }
         format.json { render :show, status: :created, location: @voice_talent_user }
+        format.js   { render action: voice_talent_users_url, status: :created, location: @voice_talent_user }
       else
         format.html { render :new }
         format.json { render json: @voice_talent_user.errors, status: :unprocessable_entity }
+        format.js   { render json: @voice_talent_user.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -78,7 +85,7 @@ class VoiceTalentUsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def voice_talent_user_params
-      params.require(:voice_talent_user).permit(:first_name, :last_name, :nickname, :email,
+      params.require(:voice_talent_user).permit(:id, :first_name, :last_name, :nickname, :email,
              :is_veteran, :full_rate, :rush_full_rate, :rush_partial_rate, :partial_rate, :correction_rate)
     end
 end

@@ -28,3 +28,13 @@ padding: 0 2px;
 padding-left: 0;
 }
 
+.form-group__inside_table {
+  .form-group {
+    display: block !important;
+    margin-bottom: 15px !important;
+  }
+
+  .form-control {
+    width: 100% !important;
+  }
+}

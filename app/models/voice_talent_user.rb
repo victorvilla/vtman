@@ -20,7 +20,12 @@ class VoiceTalentUser < ActiveRecord::Base
   validates :correction_rate, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
   def to_s
-    return id.to_s + ',' + first_name.to_s + ',' + last_name.to_s + ',' + nickname.to_s + ',' + email.to_s + ',' + number_to_currency(full_rate, precision: 0).to_s + ',' + number_to_currency(rush_full_rate, precision: 0).to_s + ',' + number_to_currency(partial_rate, precision: 0).to_s + ',' + number_to_currency(rush_partial_rate, precision: 0).to_s + ',' + number_to_currency(correction_rate, precision: 0).to_s
+    return id.to_s + ':' + first_name.to_s + ':' + last_name.to_s + ':' + nickname.to_s + ':' + is_veteran.to_s + ':' + email.to_s + ':' + format_number(full_rate) + ':' + format_number(rush_full_rate) + ':' + format_number(partial_rate) + ':' + format_number(rush_partial_rate) + ':' + format_number(correction_rate)
   end
+
+  private
+    def format_number item
+      number_to_currency(item, unit: '', precision: 0).to_s
+    end
 
 end
